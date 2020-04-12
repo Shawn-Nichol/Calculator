@@ -12,7 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import static com.example.calculator.Constants.ADD;
+import static com.example.calculator.Constants.DIVIDE;
+import static com.example.calculator.Constants.MINUS;
+import static com.example.calculator.Constants.MULTIPLE;
 import static com.example.calculator.Constants.NO_VALUE;
 
 
@@ -23,6 +28,8 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
     // UI
     Button btnZero, btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine, btnDecimal;
     Button btnPlus, btnMinus, btnMultiple, btnDivide, btnEquals, btnClear;
+
+    TextView formula, solution;
 
 
     CalculatorViewModel viewModel;
@@ -46,6 +53,7 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
         Log.d(TAG, "onViewCreated: ");
 
         initButtons(view);
+        initTextView(view);
 
     }
 
@@ -57,6 +65,10 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
 
     }
 
+    private void initTextView(View v) {
+        formula = v.findViewById(R.id.formula);
+        solution = v.findViewById(R.id.solution);
+    }
     private void initButtons(View v) {
         // Btn Numbers
         btnZero = v.findViewById(R.id.btn_zero);
@@ -138,16 +150,16 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
                 btnNumbers(".");
                 break;
             case R.id.btn_plus:
-                btnSymbols("plus");
+                btnSymbols(ADD);
                 break;
             case R.id.btn_minus:
-                btnSymbols("minus");
+                btnSymbols(MINUS);
                 break;
             case R.id.btn_multiple:
-                btnSymbols("multiple");
+                btnSymbols(MULTIPLE);
                 break;
             case R.id.btn_divide:
-                btnSymbols("divide");
+                btnSymbols(DIVIDE);
                 break;
             case R.id.btn_equals:
                 equals();
@@ -165,8 +177,16 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
     private void btnNumbers(String number) {
         if(viewModel.getSavedSymbol().equals(NO_VALUE)) {
             viewModel.setNumberOne(number);
+
+            solution.setVisibility(View.VISIBLE);
+            viewModel.setDisplayFormula(viewModel.getNumberOne());
+            solution.setText(viewModel.getDisplayFormula());
+
         } else {
             viewModel.setNumberTwo(number);
+
+            viewModel.setDisplayFormula(viewModel.getDisplayFormula() + " " + viewModel.getNumberTwo());
+            solution.setText(viewModel.getDisplayFormula());
         }
 
         Log.d(TAG, "btnNumbers: mNumberOne " + viewModel.getNumberOne() + ", mNumberTwo " + viewModel.getNumberTwo());
@@ -174,7 +194,13 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
 
 
     private void btnSymbols(String symbol) {
+
         viewModel.setSavedSymbol(symbol);
+
+
+        viewModel.setDisplayFormula(viewModel.getDisplayFormula() + " " + symbol);
+        solution.setText(viewModel.getDisplayFormula());
+
     }
 
     /**
@@ -190,23 +216,27 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
 
 
         switch(viewModel.getSavedSymbol()) {
-            case "plus":
+            case ADD:
                 viewModel.setEquals(numberOne + numberTwo);
                 Log.d(TAG, "equals: " + numberOne + " + " + numberTwo + " = " + viewModel.getEquals());
                 break;
-            case "minus":
+            case MINUS:
                 viewModel.setEquals(numberOne - numberTwo);
                 Log.d(TAG, "equals: " + numberOne + " - " + numberTwo + " = " + viewModel.getEquals());
                 break;
-            case "multiple":
+            case MULTIPLE:
                 viewModel.setEquals(numberOne * numberTwo);
                 Log.d(TAG, "equals: " + numberOne + " * " + numberTwo + " = " + viewModel.getEquals());
                 break;
-            case "divide":
+            case DIVIDE:
                 viewModel.setEquals(numberOne % numberTwo);
                 Log.d(TAG, "equals: " + numberOne + " % " + numberTwo + " = " + viewModel.getEquals());
                 break;
         }
+
+        formula.setVisibility(View.VISIBLE);
+        formula.setText(viewModel.getDisplayFormula());
+        solution.setText(String.valueOf(viewModel.getEquals()));
 
 
     }
@@ -218,6 +248,11 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
         viewModel.setNumberOne(NO_VALUE);
         viewModel.setNumberTwo(NO_VALUE);
         viewModel.setSavedSymbol(NO_VALUE);
+        viewModel.setDisplayFormula(NO_VALUE);
+        viewModel.setDisplaySolution(NO_VALUE);
+
+        formula.setVisibility(View.INVISIBLE);
+        solution.setVisibility(View.INVISIBLE);
 
         Log.d(TAG, "clear: NumberOne: " + viewModel.getNumberOne() + ", Number Two: " + viewModel.getNumberTwo() +
                 " SavedSymbol: " + viewModel.getSavedSymbol());

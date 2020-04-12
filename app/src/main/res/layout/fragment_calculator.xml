@@ -22,27 +22,31 @@
 
 
         <TextView
-            android:id="@+id/equation"
+            android:id="@+id/formula"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:text="1000"
-            android:textAlignment="center"
+            android:textAlignment="textEnd"
             android:textColor="@color/colorEquation"
             android:textSize="36sp"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <TextView
-            android:id="@+id/answer"
+            android:id="@+id/solution"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="8888"
             android:textAlignment="center"
             android:textColor="@color/colorEquation"
             android:textSize="48sp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

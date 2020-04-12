@@ -15,6 +15,9 @@ public class CalculatorViewModel extends ViewModel {
     private String mSavedSymbol;
     private double mEquals;
 
+    private String mDisplayFormula;
+    private String mDisplaySolution;
+
     // Constructor.
     public CalculatorViewModel() {
         Log.d(TAG, "CalculatorViewModel: ");
@@ -79,5 +82,22 @@ public class CalculatorViewModel extends ViewModel {
         mNumberOne = String.valueOf(mEquals);
         mNumberTwo = NO_VALUE;
         Log.d(TAG, "setEquals: numberOne " + mNumberOne + " numberTwo " + mNumberTwo);
+    }
+
+
+    public String getDisplayFormula() {
+        return mDisplayFormula;
+    }
+
+    public void setDisplayFormula(String mDisplayFormula) {
+        this.mDisplayFormula = mDisplayFormula;
+    }
+
+    public String getDisplaySolution() {
+        return mDisplaySolution;
+    }
+
+    public void setDisplaySolution(String mDisplaySolution) {
+        this.mDisplaySolution = mDisplaySolution;
     }
 }
