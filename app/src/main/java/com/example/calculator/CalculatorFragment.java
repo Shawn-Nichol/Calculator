@@ -1,7 +1,5 @@
 package com.example.calculator;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,12 +15,18 @@ import android.widget.Button;
 
 public class CalculatorFragment extends Fragment implements View.OnClickListener{
 
-
     private static final String TAG = "CalculatorFragment";
 
     // UI
     Button btnZero, btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine, btnDecimal;
     Button btnPlus, btnMinus, btnMultiple, btnDivide, btnEquals, btnClear;
+
+
+    // Variables
+    String mNumberOne;
+    String mNumberTwo;
+    String mSavedSymbol;
+
 
     @Nullable
     @Override
@@ -36,6 +40,8 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated: ");
+
+
 
 
         initButtons(view);
@@ -92,37 +98,37 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.btn_zero:
-                btnNumbers(0);
+                btnNumbers("0");
                 break;
             case R.id.btn_one:
-                btnNumbers(1);
+                btnNumbers("1");
                 break;
             case R.id.btn_two:
-                btnNumbers(2);
+                btnNumbers("2");
                 break;
             case R.id.btn_three:
-                btnNumbers(3);
+                btnNumbers("3");
                 break;
             case R.id.btn_four:
-                btnNumbers(4);
+                btnNumbers("4");
                 break;
             case R.id.btn_five:
-                btnNumbers(5);
+                btnNumbers("5");
                 break;
             case R.id.btn_six:
-                btnNumbers(6);
+                btnNumbers("6");
                 break;
             case R.id.btn_seven:
-                btnNumbers(7);
+                btnNumbers("7");
                 break;
             case R.id.btn_eight:
-                btnNumbers(8);
+                btnNumbers("8");
                 break;
             case R.id.btn_nine:
-                btnNumbers(9);
+                btnNumbers("9");
                 break;
             case R.id.btn_decimal:
-                Log.d(TAG, "onClick: decimal");
+                btnNumbers(".");
                 break;
             case R.id.btn_plus:
                 btnSymbols("plus");
@@ -137,21 +143,83 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
                 btnSymbols("divide");
                 break;
             case R.id.btn_equals:
-                btnSymbols("equals");
+                equals();
                 break;
             case R.id.btn_clear:
-                Log.d(TAG, "onClick: clear");
+                clear();
                 break;
         }
     }
 
-    private void btnNumbers(int number) {
-        Log.d(TAG, "btnNumbers: " + number);
+    /**
+     * Saves user input numbers.
+     * @param number
+     */
+    private void btnNumbers(String number) {
+        if(mSavedSymbol == null) {
+            if(mNumberOne == null) {
+                mNumberOne = number;
+            } else {
+                mNumberOne += number;
+            }
+        } else {
+            if(mNumberTwo == null) {
+                mNumberTwo = number;
+            } else {
+                mNumberTwo += number;
+            }
+        }
 
+        Log.d(TAG, "btnNumbers: mNumberOne " + mNumberOne + ", mNumberTwo " + mNumberTwo);
     }
 
+
     private void btnSymbols(String symbol) {
-        Log.d(TAG, "btnSymbols: " + symbol);
+        mSavedSymbol = symbol;
+    }
+
+    /**
+     * Does basic math.
+     */
+    private void equals() {
+        // Converts string into a double
+        double numberOne = Double.parseDouble(mNumberOne);
+        double numberTwo = Double.parseDouble(mNumberTwo);
+
+        double equals = 0 ;
+
+
+        switch(mSavedSymbol) {
+            case "plus":
+                equals = numberOne + numberTwo;
+                Log.d(TAG, "equals: " + numberOne + " + " + numberTwo + " = " + equals);
+                break;
+            case "minus":
+                equals = numberOne - numberTwo;
+                Log.d(TAG, "equals: " + numberOne + " - " + numberTwo + " = " + equals);
+                break;
+            case "multiple":
+                equals = numberOne * numberTwo;
+                Log.d(TAG, "equals: " + numberOne + " * " + numberTwo + " = " + equals);
+                break;
+            case "divide":
+                equals = numberOne % numberTwo;
+                Log.d(TAG, "equals: " + numberOne + " % " + numberTwo + " = " + equals);
+                break;
+        }
+
+        mNumberOne = String.valueOf(equals);
+        mNumberTwo = null;
+    }
+
+    /**
+     * Removes all saved values.
+     */
+    private void clear() {
+        Log.d(TAG, "clear: reset all values to null");
+        mNumberOne = null;
+        mNumberTwo = null;
+        mSavedSymbol = null;
     }
 
 
