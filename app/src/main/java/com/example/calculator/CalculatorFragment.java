@@ -14,6 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.calculator.Math.Addition;
+import com.example.calculator.Math.Divide;
+import com.example.calculator.Math.Minus;
+import com.example.calculator.Math.Multiple;
+
 import static com.example.calculator.Constants.ADD;
 import static com.example.calculator.Constants.DIVIDE;
 import static com.example.calculator.Constants.MINUS;
@@ -217,20 +222,16 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
 
         switch(viewModel.getSavedSymbol()) {
             case ADD:
-                viewModel.setEquals(numberOne + numberTwo);
-                Log.d(TAG, "equals: " + numberOne + " + " + numberTwo + " = " + viewModel.getEquals());
+                viewModel.setEquals(Addition.formula(numberOne, numberTwo));
                 break;
             case MINUS:
-                viewModel.setEquals(numberOne - numberTwo);
-                Log.d(TAG, "equals: " + numberOne + " - " + numberTwo + " = " + viewModel.getEquals());
+                viewModel.setEquals(Minus.formula(numberOne, numberTwo));
                 break;
             case MULTIPLE:
-                viewModel.setEquals(numberOne * numberTwo);
-                Log.d(TAG, "equals: " + numberOne + " * " + numberTwo + " = " + viewModel.getEquals());
+                viewModel.setEquals(Multiple.formula(numberOne, numberTwo));
                 break;
             case DIVIDE:
-                viewModel.setEquals(numberOne % numberTwo);
-                Log.d(TAG, "equals: " + numberOne + " % " + numberTwo + " = " + viewModel.getEquals());
+                viewModel.setEquals(Divide.formula(numberOne, numberTwo));
                 break;
         }
 
