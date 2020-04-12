@@ -5,12 +5,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import static com.example.calculator.Constants.NO_VALUE;
 
 
 public class CalculatorFragment extends Fragment implements View.OnClickListener{
@@ -22,16 +25,17 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
     Button btnPlus, btnMinus, btnMultiple, btnDivide, btnEquals, btnClear;
 
 
-    // Variables
-    String mNumberOne;
-    String mNumberTwo;
-    String mSavedSymbol;
+    CalculatorViewModel viewModel;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
+
+        initViewModel();
+
+
         return inflater.inflate(R.layout.fragment_calculator, container, false);
 
     }
@@ -41,11 +45,14 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated: ");
 
-
-
-
         initButtons(view);
 
+    }
+
+
+    private void initViewModel(){
+        // Creates viewModel class, only done once.
+        viewModel = new ViewModelProvider(this).get(CalculatorViewModel.class);
 
 
     }
@@ -156,70 +163,65 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
      * @param number
      */
     private void btnNumbers(String number) {
-        if(mSavedSymbol == null) {
-            if(mNumberOne == null) {
-                mNumberOne = number;
-            } else {
-                mNumberOne += number;
-            }
+        if(viewModel.getSavedSymbol().equals(NO_VALUE)) {
+            viewModel.setNumberOne(number);
         } else {
-            if(mNumberTwo == null) {
-                mNumberTwo = number;
-            } else {
-                mNumberTwo += number;
-            }
+            viewModel.setNumberTwo(number);
         }
 
-        Log.d(TAG, "btnNumbers: mNumberOne " + mNumberOne + ", mNumberTwo " + mNumberTwo);
+        Log.d(TAG, "btnNumbers: mNumberOne " + viewModel.getNumberOne() + ", mNumberTwo " + viewModel.getNumberTwo());
     }
 
 
     private void btnSymbols(String symbol) {
-        mSavedSymbol = symbol;
+        viewModel.setSavedSymbol(symbol);
     }
 
     /**
      * Does basic math.
      */
     private void equals() {
+
+
         // Converts string into a double
-        double numberOne = Double.parseDouble(mNumberOne);
-        double numberTwo = Double.parseDouble(mNumberTwo);
-
-        double equals = 0 ;
+        double numberOne = Double.parseDouble(viewModel.getNumberOne());
+        double numberTwo = Double.parseDouble(viewModel.getNumberTwo());
 
 
-        switch(mSavedSymbol) {
+
+        switch(viewModel.getSavedSymbol()) {
             case "plus":
-                equals = numberOne + numberTwo;
-                Log.d(TAG, "equals: " + numberOne + " + " + numberTwo + " = " + equals);
+                viewModel.setEquals(numberOne + numberTwo);
+                Log.d(TAG, "equals: " + numberOne + " + " + numberTwo + " = " + viewModel.getEquals());
                 break;
             case "minus":
-                equals = numberOne - numberTwo;
-                Log.d(TAG, "equals: " + numberOne + " - " + numberTwo + " = " + equals);
+                viewModel.setEquals(numberOne - numberTwo);
+                Log.d(TAG, "equals: " + numberOne + " - " + numberTwo + " = " + viewModel.getEquals());
                 break;
             case "multiple":
-                equals = numberOne * numberTwo;
-                Log.d(TAG, "equals: " + numberOne + " * " + numberTwo + " = " + equals);
+                viewModel.setEquals(numberOne * numberTwo);
+                Log.d(TAG, "equals: " + numberOne + " * " + numberTwo + " = " + viewModel.getEquals());
                 break;
             case "divide":
-                equals = numberOne % numberTwo;
-                Log.d(TAG, "equals: " + numberOne + " % " + numberTwo + " = " + equals);
+                viewModel.setEquals(numberOne % numberTwo);
+                Log.d(TAG, "equals: " + numberOne + " % " + numberTwo + " = " + viewModel.getEquals());
                 break;
         }
 
-        mNumberOne = String.valueOf(equals);
-        mNumberTwo = null;
+
     }
 
     /**
      * Removes all saved values.
      */
     private void clear() {
-        Log.d(TAG, "clear: reset all values to null");
-        mNumberOne = null;
-        mNumberTwo = null;
-        mSavedSymbol = null;
+        viewModel.setNumberOne(NO_VALUE);
+        viewModel.setNumberTwo(NO_VALUE);
+        viewModel.setSavedSymbol(NO_VALUE);
+
+        Log.d(TAG, "clear: NumberOne: " + viewModel.getNumberOne() + ", Number Two: " + viewModel.getNumberTwo() +
+                " SavedSymbol: " + viewModel.getSavedSymbol());
+
     }
 
 
