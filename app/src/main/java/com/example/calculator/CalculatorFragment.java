@@ -28,7 +28,7 @@ import static com.example.calculator.Constants.MULTIPLE;
 import static com.example.calculator.Constants.ON;
 import static com.example.calculator.Constants.SET_NUMBER_ONE;
 import static com.example.calculator.Constants.SET_SECOND_NUMBER;
-import static java.lang.Double.NaN;
+
 
 
 public class CalculatorFragment extends Fragment implements View.OnClickListener{
