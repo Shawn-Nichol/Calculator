@@ -2,7 +2,7 @@ package com.example.calculator;
 
 public class Constants {
 
-
+    public static final String TAG_FRAG_CALCUALOTR = "calculator";
 
     public static final String ADD = "+";
     public static final String MINUS = "-";

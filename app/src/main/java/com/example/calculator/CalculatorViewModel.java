@@ -55,7 +55,7 @@ public class CalculatorViewModel extends ViewModel {
         mSavedSymbol = symbol;
     }
 
-    public double getEquals() {
+    public double getSolution() {
         return mEquals;
     }
 
@@ -64,12 +64,12 @@ public class CalculatorViewModel extends ViewModel {
      * Set the second number to null so the user can add a second number.
      * @param equals the results of the combined doubles.
      */
-    public void setEquals(double equals) {
-        Log.d(TAG, "setEquals: " + equals);
+    public void setSolution(double equals) {
+        Log.d(TAG, "setSolution: " + equals);
         this.mEquals = equals;
         mNumberOne = String.valueOf(mEquals);
         mFormulaState = SET_SECOND_NUMBER;
-        Log.d(TAG, "setEquals: numberOne " + mNumberOne + " numberTwo " + mNumberTwo);
+        Log.d(TAG, "setSolution: numberOne " + mNumberOne + " numberTwo " + mNumberTwo);
     }
 
 
