@@ -20,10 +20,13 @@ import com.example.calculator.Math.Minus;
 import com.example.calculator.Math.Multiple;
 
 import static com.example.calculator.Constants.ADD;
+import static com.example.calculator.Constants.ADD_TO_NUMBER_TWO;
 import static com.example.calculator.Constants.DIVIDE;
+import static com.example.calculator.Constants.ADD_TO_NUMBER_ONE;
 import static com.example.calculator.Constants.MINUS;
 import static com.example.calculator.Constants.MULTIPLE;
-import static com.example.calculator.Constants.NO_VALUE;
+import static com.example.calculator.Constants.SET_NUMBER_ONE;
+import static com.example.calculator.Constants.SET_SECOND_NUMBER;
 
 
 public class CalculatorFragment extends Fragment implements View.OnClickListener{
@@ -60,6 +63,10 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
         initButtons(view);
         initTextView(view);
 
+        if(viewModel.getFormulaState() > SET_NUMBER_ONE) {
+            formula.setVisibility(View.VISIBLE);
+            solution.setVisibility(View.INVISIBLE);
+        }
     }
 
 
@@ -180,30 +187,48 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
      * @param number
      */
     private void btnNumbers(String number) {
-        if(viewModel.getSavedSymbol().equals(NO_VALUE)) {
-            viewModel.setNumberOne(number);
 
-            solution.setVisibility(View.VISIBLE);
-            viewModel.setDisplayFormula(viewModel.getNumberOne());
-            solution.setText(viewModel.getDisplayFormula());
 
-        } else {
-            viewModel.setNumberTwo(number);
+        switch (viewModel.getFormulaState()) {
+            case SET_NUMBER_ONE:
+                viewModel.setNumberOne(number);
+                viewModel.setFormulaState(ADD_TO_NUMBER_ONE);
+                solution.setVisibility(View.VISIBLE);
+                solution.setText(viewModel.getNumberOne());
+                Log.d(TAG, "btnNumbers: " + viewModel.getNumberOne());
+                break;
+            case ADD_TO_NUMBER_ONE:
+                viewModel.setNumberOne(viewModel.getNumberOne() + number);
+                viewModel.setFormula(viewModel.getDisplayFormula() + viewModel.getNumberTwo());
+                solution.setText(viewModel.getNumberOne());
 
-            viewModel.setDisplayFormula(viewModel.getDisplayFormula() + " " + viewModel.getNumberTwo());
-            solution.setText(viewModel.getDisplayFormula());
+                Log.d(TAG, "btnNumbers: " + viewModel.getNumberOne());
+                break;
+            case SET_SECOND_NUMBER:
+                viewModel.setNumberTwo(number);
+                viewModel.setFormula(viewModel.getDisplayFormula() + " " + viewModel.getNumberTwo());
+
+                solution.setText(viewModel.getDisplayFormula());
+                viewModel.setFormulaState(ADD_TO_NUMBER_TWO);
+                Log.d(TAG, "btnNumbers: " + viewModel.getNumberTwo());
+                break;
+            case ADD_TO_NUMBER_TWO:
+                viewModel.setNumberTwo(viewModel.getNumberTwo() + number);
+
+                solution.setText(viewModel.getDisplayFormula() + " " + viewModel.getNumberTwo());
+                Log.d(TAG, "btnNumbers: " + viewModel.getNumberTwo());
+
         }
-
-        Log.d(TAG, "btnNumbers: mNumberOne " + viewModel.getNumberOne() + ", mNumberTwo " + viewModel.getNumberTwo());
     }
 
 
     private void btnSymbols(String symbol) {
 
         viewModel.setSavedSymbol(symbol);
+        viewModel.setFormulaState(SET_SECOND_NUMBER);
 
+        viewModel.setFormula(viewModel.getNumberOne() + " " + symbol);
 
-        viewModel.setDisplayFormula(viewModel.getDisplayFormula() + " " + symbol);
         solution.setText(viewModel.getDisplayFormula());
 
     }
@@ -235,8 +260,10 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
                 break;
         }
 
+
+
         formula.setVisibility(View.VISIBLE);
-        formula.setText(viewModel.getDisplayFormula());
+        formula.setText(viewModel.getDisplayFormula() + " = " + viewModel.getEquals());
         solution.setText(String.valueOf(viewModel.getEquals()));
 
 
@@ -246,11 +273,7 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
      * Removes all saved values.
      */
     private void clear() {
-        viewModel.setNumberOne(NO_VALUE);
-        viewModel.setNumberTwo(NO_VALUE);
-        viewModel.setSavedSymbol(NO_VALUE);
-        viewModel.setDisplayFormula(NO_VALUE);
-        viewModel.setDisplaySolution(NO_VALUE);
+        viewModel.setFormulaState(SET_NUMBER_ONE);
 
         formula.setVisibility(View.INVISIBLE);
         solution.setVisibility(View.INVISIBLE);

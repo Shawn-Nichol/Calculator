@@ -4,11 +4,17 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import static com.example.calculator.Constants.NO_VALUE;
+import static com.example.calculator.Constants.SET_NUMBER_ONE;
+import static com.example.calculator.Constants.SET_SECOND_NUMBER;
+
 
 public class CalculatorViewModel extends ViewModel {
 
     private static final String TAG = "CalculatorViewModel";
+
+    private int mFormulaState;
+
+
 
     private String mNumberOne;
     private String mNumberTwo;
@@ -21,10 +27,8 @@ public class CalculatorViewModel extends ViewModel {
     // Constructor.
     public CalculatorViewModel() {
         Log.d(TAG, "CalculatorViewModel: ");
-        mNumberOne = NO_VALUE;
-        mNumberTwo = NO_VALUE;
-        mSavedSymbol = NO_VALUE;
-        mEquals = 0;
+        mFormulaState = SET_NUMBER_ONE;
+
     }
 
     public String getNumberOne() {
@@ -32,14 +36,7 @@ public class CalculatorViewModel extends ViewModel {
     }
 
     public void setNumberOne(String number) {
-        Log.d(TAG, "setNumberOne: " + number);
-        if(number.equals(NO_VALUE)) {
-            mNumberOne = NO_VALUE;
-        } else if((mNumberOne == NO_VALUE)) {
-            mNumberOne = number;
-        } else {
-            mNumberOne += number;
-        }
+        mNumberOne = number;
 
     }
 
@@ -48,15 +45,7 @@ public class CalculatorViewModel extends ViewModel {
     }
 
     public void setNumberTwo(String number) {
-        Log.d(TAG, "setNumberTwo: " + number);
-        if(number.equals(NO_VALUE)) {
-            mNumberOne = NO_VALUE;
-        }
-        if (mNumberTwo == NO_VALUE) {
-            mNumberTwo = number;
-        } else {
-            mNumberTwo += number;
-        }
+        mNumberTwo = number;
     }
 
     public String getSavedSymbol() {
@@ -80,7 +69,7 @@ public class CalculatorViewModel extends ViewModel {
         Log.d(TAG, "setEquals: " + equals);
         this.mEquals = equals;
         mNumberOne = String.valueOf(mEquals);
-        mNumberTwo = NO_VALUE;
+        mFormulaState = SET_SECOND_NUMBER;
         Log.d(TAG, "setEquals: numberOne " + mNumberOne + " numberTwo " + mNumberTwo);
     }
 
@@ -89,7 +78,7 @@ public class CalculatorViewModel extends ViewModel {
         return mDisplayFormula;
     }
 
-    public void setDisplayFormula(String mDisplayFormula) {
+    public void setFormula(String mDisplayFormula) {
         this.mDisplayFormula = mDisplayFormula;
     }
 
@@ -99,5 +88,13 @@ public class CalculatorViewModel extends ViewModel {
 
     public void setDisplaySolution(String mDisplaySolution) {
         this.mDisplaySolution = mDisplaySolution;
+    }
+
+    public int getFormulaState() {
+        return mFormulaState;
+    }
+
+    public void setFormulaState(int mFormulaState) {
+        this.mFormulaState = mFormulaState;
     }
 }
