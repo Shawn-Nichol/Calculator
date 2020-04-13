@@ -4,7 +4,9 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
+import static com.example.calculator.Constants.SET_NUMBER_ONE;
 import static com.example.calculator.Constants.SET_SECOND_NUMBER;
+import static java.lang.Double.NaN;
 
 
 public class CalculatorViewModel extends ViewModel {
@@ -18,9 +20,9 @@ public class CalculatorViewModel extends ViewModel {
     private String mNumberOne;
     private String mNumberTwo;
     private String mSavedSymbol;
-    private double mEquals;
+    private Double mSolution;
 
-    private String mDisplayFormula;
+    private String mSavedFormula;
     private int mViewModelState;
 
     // Constructor.
@@ -55,8 +57,8 @@ public class CalculatorViewModel extends ViewModel {
         mSavedSymbol = symbol;
     }
 
-    public double getSolution() {
-        return mEquals;
+    public Double getSolution() {
+        return mSolution;
     }
 
     /**
@@ -64,21 +66,21 @@ public class CalculatorViewModel extends ViewModel {
      * Set the second number to null so the user can add a second number.
      * @param equals the results of the combined doubles.
      */
-    public void setSolution(double equals) {
+    public void setSolution(Double equals) {
         Log.d(TAG, "setSolution: " + equals);
-        this.mEquals = equals;
-        mNumberOne = String.valueOf(mEquals);
+        this.mSolution = equals;
+        mNumberOne = String.valueOf(mSolution);
         mFormulaState = SET_SECOND_NUMBER;
         Log.d(TAG, "setSolution: numberOne " + mNumberOne + " numberTwo " + mNumberTwo);
     }
 
 
-    public String getDisplayFormula() {
-        return mDisplayFormula;
+    public String getSavedFormula() {
+        return mSavedFormula;
     }
 
-    public void setFormula(String mDisplayFormula) {
-        this.mDisplayFormula = mDisplayFormula;
+    public void setSavedFormula(String mDisplayFormula) {
+        this.mSavedFormula = mDisplayFormula;
     }
 
 
@@ -96,5 +98,14 @@ public class CalculatorViewModel extends ViewModel {
 
     public void setViewModelState(int mViewModelState) {
         this.mViewModelState = mViewModelState;
+    }
+
+    public void setClear() {
+        mNumberOne = null;
+        mNumberTwo = null;
+        mSavedSymbol = null;
+        mSavedFormula = null;
+        mSolution = null;
+        mFormulaState = SET_NUMBER_ONE;
     }
 }

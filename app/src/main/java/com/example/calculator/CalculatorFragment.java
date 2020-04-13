@@ -28,6 +28,7 @@ import static com.example.calculator.Constants.MULTIPLE;
 import static com.example.calculator.Constants.ON;
 import static com.example.calculator.Constants.SET_NUMBER_ONE;
 import static com.example.calculator.Constants.SET_SECOND_NUMBER;
+import static java.lang.Double.NaN;
 
 
 public class CalculatorFragment extends Fragment implements View.OnClickListener{
@@ -46,11 +47,7 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
 
-
-
-
         return inflater.inflate(R.layout.fragment_calculator, container, false);
-
     }
 
     @Override
@@ -58,14 +55,9 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated: ");
 
-
         initTextView(view);
         initButtons(view);
         initViewModel();
-
-
-
-
 
     }
 
@@ -80,16 +72,27 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
             Log.d(TAG, "onViewCreated: ViewModel saved data, " +
                     "\n numberOne " + viewModel.getNumberOne() +
                     "\n numberTwo " + viewModel.getNumberTwo() +
-                    "\n Formula " + viewModel.getDisplayFormula() +
+                    "\n Formula " + viewModel.getSavedFormula() +
                     "\n Solution " + viewModel.getSolution());
-            formula.setVisibility(View.VISIBLE);
-            formula.setText(viewModel.getDisplayFormula());
-            solution.setVisibility(View.VISIBLE);
-            solution.setText(String.valueOf(viewModel.getSolution()));
 
+            showScreen();
 
         }
     }
+
+    private void showScreen() {
+        formula.setVisibility(View.VISIBLE);
+        solution.setVisibility(View.VISIBLE);
+        formula.setText(viewModel.getSavedFormula());
+
+        if(viewModel.getSolution() == null) {
+            Log.d(TAG, "showScreen: no solution saved display formula " + viewModel.getSavedFormula());
+            solution.setText(String.valueOf(viewModel.getSavedFormula()));
+        } else {
+            solution.setText(String.valueOf(viewModel.getSolution()));
+        }
+    }
+
 
     private void initTextView(View v) {
         Log.d(TAG, "initTextView: ");
@@ -227,23 +230,23 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
                 break;
             case ADD_TO_NUMBER_ONE:
                 viewModel.setNumberOne(viewModel.getNumberOne() + number);
-                viewModel.setFormula(viewModel.getDisplayFormula() + viewModel.getNumberTwo());
+                viewModel.setSavedFormula(viewModel.getSavedFormula() + viewModel.getNumberTwo());
                 solution.setText(viewModel.getNumberOne());
 
                 Log.d(TAG, "btnNumbers: " + viewModel.getNumberOne());
                 break;
             case SET_SECOND_NUMBER:
                 viewModel.setNumberTwo(number);
-                viewModel.setFormula(viewModel.getDisplayFormula() + " " + viewModel.getNumberTwo());
+                viewModel.setSavedFormula(viewModel.getSavedFormula() + " " + viewModel.getNumberTwo());
 
-                solution.setText(viewModel.getDisplayFormula());
+                solution.setText(viewModel.getSavedFormula());
                 viewModel.setFormulaState(ADD_TO_NUMBER_TWO);
                 Log.d(TAG, "btnNumbers: " + viewModel.getNumberTwo());
                 break;
             case ADD_TO_NUMBER_TWO:
                 viewModel.setNumberTwo(viewModel.getNumberTwo() + number);
 
-                solution.setText(viewModel.getDisplayFormula() + " " + viewModel.getNumberTwo());
+                solution.setText(viewModel.getSavedFormula() + " " + viewModel.getNumberTwo());
                 Log.d(TAG, "btnNumbers: " + viewModel.getNumberTwo());
 
         }
@@ -255,9 +258,9 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
         viewModel.setSavedSymbol(symbol);
         viewModel.setFormulaState(SET_SECOND_NUMBER);
 
-        viewModel.setFormula(viewModel.getNumberOne() + " " + symbol);
+        viewModel.setSavedFormula(viewModel.getNumberOne() + " " + symbol);
 
-        solution.setText(viewModel.getDisplayFormula());
+        solution.setText(viewModel.getSavedFormula());
 
     }
 
@@ -291,7 +294,7 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
 
 
         formula.setVisibility(View.VISIBLE);
-        formula.setText(viewModel.getDisplayFormula() + " = " + viewModel.getSolution());
+        formula.setText(viewModel.getSavedFormula() + " = " + viewModel.getSolution());
         solution.setText(String.valueOf(viewModel.getSolution()));
 
 
@@ -301,14 +304,16 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
      * Removes all saved values.
      */
     private void clear() {
-        viewModel.setFormulaState(SET_NUMBER_ONE);
+        viewModel.setClear();
 
         formula.setVisibility(View.INVISIBLE);
         solution.setVisibility(View.INVISIBLE);
 
-        Log.d(TAG, "clear: NumberOne: " + viewModel.getNumberOne() + ", Number Two: " + viewModel.getNumberTwo() +
-                " SavedSymbol: " + viewModel.getSavedSymbol());
-
+        Log.d(TAG, "onViewCreated: ViewModel saved data, " +
+                "\n numberOne " + viewModel.getNumberOne() +
+                "\n numberTwo " + viewModel.getNumberTwo() +
+                "\n Formula " + viewModel.getSavedFormula() +
+                "\n Solution " + viewModel.getSolution());
     }
 
 

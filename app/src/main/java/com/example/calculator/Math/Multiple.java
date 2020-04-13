@@ -6,7 +6,7 @@ public class Multiple {
 
     private static final String TAG = "Calculate Multiple";
 
-    public static double formula(double numberOne, double numberTwo) {
+    public static double formula(Double numberOne, Double numberTwo) {
         double answer;
         if(numberOne == 0 || numberTwo == 0) {
             answer = 0;

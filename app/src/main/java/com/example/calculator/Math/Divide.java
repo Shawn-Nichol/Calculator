@@ -6,7 +6,7 @@ public class Divide {
 
     private static final String TAG = "Calculate Divide";
 
-    public static Double formula(double numberOne, double numberTwo) {
+    public static Double formula(Double numberOne, Double numberTwo) {
         double answer;
 
         if(numberOne == 0 || numberTwo == 0) {

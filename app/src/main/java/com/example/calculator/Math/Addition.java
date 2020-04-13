@@ -9,7 +9,7 @@ public class Addition {
 
 
 
-    public static Double formula(double numberOne, double numberTwo) {
+    public static Double formula(Double numberOne, Double numberTwo) {
         double answer = numberOne + numberTwo;
         Log.d(TAG, "formula: " + numberOne + " + " +  numberTwo + " = " + answer);
 
