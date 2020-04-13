@@ -4,7 +4,6 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import static com.example.calculator.Constants.SET_NUMBER_ONE;
 import static com.example.calculator.Constants.SET_SECOND_NUMBER;
 
 
@@ -22,12 +21,12 @@ public class CalculatorViewModel extends ViewModel {
     private double mEquals;
 
     private String mDisplayFormula;
-    private String mDisplaySolution;
+    private int mViewModelState;
 
     // Constructor.
     public CalculatorViewModel() {
         Log.d(TAG, "CalculatorViewModel: ");
-        mFormulaState = SET_NUMBER_ONE;
+        mFormulaState = 1;
 
     }
 
@@ -82,13 +81,6 @@ public class CalculatorViewModel extends ViewModel {
         this.mDisplayFormula = mDisplayFormula;
     }
 
-    public String getDisplaySolution() {
-        return mDisplaySolution;
-    }
-
-    public void setDisplaySolution(String mDisplaySolution) {
-        this.mDisplaySolution = mDisplaySolution;
-    }
 
     public int getFormulaState() {
         return mFormulaState;
@@ -96,5 +88,13 @@ public class CalculatorViewModel extends ViewModel {
 
     public void setFormulaState(int mFormulaState) {
         this.mFormulaState = mFormulaState;
+    }
+
+    public int getViewModelState() {
+        return mViewModelState;
+    }
+
+    public void setViewModelState(int mViewModelState) {
+        this.mViewModelState = mViewModelState;
     }
 }
