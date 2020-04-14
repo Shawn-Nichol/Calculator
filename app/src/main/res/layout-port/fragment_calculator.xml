@@ -3,19 +3,19 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
 
 
     <include layout="@layout/screen"
         android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:layout_width="0dp"/>
+        android:layout_height="0dp"
+        android:layout_width="match_parent"/>
 
     <include layout="@layout/keyboard"
         android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:layout_width="0dp"/>
+        android:layout_height="0dp"
+        android:layout_width="match_parent"/>
 
 
 </LinearLayout>

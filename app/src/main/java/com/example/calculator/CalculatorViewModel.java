@@ -4,27 +4,32 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import static com.example.calculator.Constants.NO_VALUE;
+import static com.example.calculator.Constants.SET_NUMBER_ONE;
+import static com.example.calculator.Constants.SET_SECOND_NUMBER;
+import static java.lang.Double.NaN;
+
 
 public class CalculatorViewModel extends ViewModel {
 
     private static final String TAG = "CalculatorViewModel";
 
+    private int mFormulaState;
+
+
+
     private String mNumberOne;
     private String mNumberTwo;
     private String mSavedSymbol;
-    private double mEquals;
+    private Double mSolution;
 
-    private String mDisplayFormula;
-    private String mDisplaySolution;
+    private String mSavedFormula;
+    private int mViewModelState;
 
     // Constructor.
     public CalculatorViewModel() {
         Log.d(TAG, "CalculatorViewModel: ");
-        mNumberOne = NO_VALUE;
-        mNumberTwo = NO_VALUE;
-        mSavedSymbol = NO_VALUE;
-        mEquals = 0;
+        mFormulaState = 1;
+
     }
 
     public String getNumberOne() {
@@ -32,14 +37,7 @@ public class CalculatorViewModel extends ViewModel {
     }
 
     public void setNumberOne(String number) {
-        Log.d(TAG, "setNumberOne: " + number);
-        if(number.equals(NO_VALUE)) {
-            mNumberOne = NO_VALUE;
-        } else if((mNumberOne == NO_VALUE)) {
-            mNumberOne = number;
-        } else {
-            mNumberOne += number;
-        }
+        mNumberOne = number;
 
     }
 
@@ -48,15 +46,7 @@ public class CalculatorViewModel extends ViewModel {
     }
 
     public void setNumberTwo(String number) {
-        Log.d(TAG, "setNumberTwo: " + number);
-        if(number.equals(NO_VALUE)) {
-            mNumberOne = NO_VALUE;
-        }
-        if (mNumberTwo == NO_VALUE) {
-            mNumberTwo = number;
-        } else {
-            mNumberTwo += number;
-        }
+        mNumberTwo = number;
     }
 
     public String getSavedSymbol() {
@@ -67,8 +57,8 @@ public class CalculatorViewModel extends ViewModel {
         mSavedSymbol = symbol;
     }
 
-    public double getEquals() {
-        return mEquals;
+    public Double getSolution() {
+        return mSolution;
     }
 
     /**
@@ -76,28 +66,46 @@ public class CalculatorViewModel extends ViewModel {
      * Set the second number to null so the user can add a second number.
      * @param equals the results of the combined doubles.
      */
-    public void setEquals(double equals) {
-        Log.d(TAG, "setEquals: " + equals);
-        this.mEquals = equals;
-        mNumberOne = String.valueOf(mEquals);
-        mNumberTwo = NO_VALUE;
-        Log.d(TAG, "setEquals: numberOne " + mNumberOne + " numberTwo " + mNumberTwo);
+    public void setSolution(Double equals) {
+        Log.d(TAG, "setSolution: " + equals);
+        this.mSolution = equals;
+        mNumberOne = String.valueOf(mSolution);
+        mFormulaState = SET_SECOND_NUMBER;
+        Log.d(TAG, "setSolution: numberOne " + mNumberOne + " numberTwo " + mNumberTwo);
     }
 
 
-    public String getDisplayFormula() {
-        return mDisplayFormula;
+    public String getSavedFormula() {
+        return mSavedFormula;
     }
 
-    public void setDisplayFormula(String mDisplayFormula) {
-        this.mDisplayFormula = mDisplayFormula;
+    public void setSavedFormula(String mDisplayFormula) {
+        this.mSavedFormula = mDisplayFormula;
     }
 
-    public String getDisplaySolution() {
-        return mDisplaySolution;
+
+    public int getFormulaState() {
+        return mFormulaState;
     }
 
-    public void setDisplaySolution(String mDisplaySolution) {
-        this.mDisplaySolution = mDisplaySolution;
+    public void setFormulaState(int mFormulaState) {
+        this.mFormulaState = mFormulaState;
+    }
+
+    public int getViewModelState() {
+        return mViewModelState;
+    }
+
+    public void setViewModelState(int mViewModelState) {
+        this.mViewModelState = mViewModelState;
+    }
+
+    public void setClear() {
+        mNumberOne = null;
+        mNumberTwo = null;
+        mSavedSymbol = null;
+        mSavedFormula = null;
+        mSolution = null;
+        mFormulaState = SET_NUMBER_ONE;
     }
 }

@@ -7,10 +7,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 
+import static com.example.calculator.Constants.TAG_FRAG_CALCUALOTR;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "CalculatorMainActivity";
-    
+
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
@@ -21,19 +23,25 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: ");
         
-        initFragment();
+        initFragment(savedInstanceState);
     }
 
     /**
      * Loads the calculator fragment.
      */
-    private void initFragment() {
+    private void initFragment(Bundle savedIinstanceState) {
         Log.d(TAG, "initFragment: ");
+
+        CalculatorFragment fragment;
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
+        if(savedIinstanceState == null) {
+            fragment = new CalculatorFragment();
+        } else {
+            fragment = (CalculatorFragment) fragmentManager.findFragmentByTag(TAG_FRAG_CALCUALOTR);
+        }
 
-        CalculatorFragment fragment = new CalculatorFragment();
-        fragmentTransaction.add(R.id.main_container, fragment);
+        fragmentTransaction.replace(R.id.main_container, fragment, TAG_FRAG_CALCUALOTR);
         fragmentTransaction.commit();
     }
 }
