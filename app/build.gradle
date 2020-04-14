@@ -40,5 +40,8 @@ dependencies {
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
 
+    // Worker
+    implementation 'androidx.work:work-runtime:2.3.4'
+
 
 }

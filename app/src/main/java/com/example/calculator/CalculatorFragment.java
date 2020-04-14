@@ -6,6 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,12 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.calculator.Math.Addition;
-import com.example.calculator.Math.Divide;
-import com.example.calculator.Math.Minus;
-import com.example.calculator.Math.Multiple;
+import com.example.calculator.Math.MathWorker;
+import com.example.calculator.Math.SelectFormula;
 
+import static android.widget.Toast.LENGTH_SHORT;
 import static com.example.calculator.Constants.ADD;
 import static com.example.calculator.Constants.ADD_TO_NUMBER_TWO;
 import static com.example.calculator.Constants.DIVIDE;
@@ -28,7 +32,11 @@ import static com.example.calculator.Constants.MULTIPLE;
 import static com.example.calculator.Constants.ON;
 import static com.example.calculator.Constants.SET_NUMBER_ONE;
 import static com.example.calculator.Constants.SET_SECOND_NUMBER;
-
+import static com.example.calculator.Math.MathWorker.KEY_NUMBER_ONE;
+import static com.example.calculator.Math.MathWorker.KEY_NUMBER_TWO;
+import static com.example.calculator.Math.MathWorker.KEY_RESULT;
+import static com.example.calculator.Math.MathWorker.KEY_SYMBOL;
+import static java.lang.Double.NaN;
 
 
 public class CalculatorFragment extends Fragment implements View.OnClickListener{
@@ -58,25 +66,16 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
         initTextView(view);
         initButtons(view);
         initViewModel();
-
     }
-
 
     private void initViewModel(){
         // Creates viewModel class, only done once.
         Log.d(TAG, "initViewModel: ");
         viewModel = new ViewModelProvider(this).get(CalculatorViewModel.class);
 
-
         if(viewModel.getViewModelState() == ON) {
-            Log.d(TAG, "onViewCreated: ViewModel saved data, " +
-                    "\n numberOne " + viewModel.getNumberOne() +
-                    "\n numberTwo " + viewModel.getNumberTwo() +
-                    "\n Formula " + viewModel.getSavedFormula() +
-                    "\n Solution " + viewModel.getSolution());
-
+            logViewModelInfo("initViewModel");
             showScreen();
-
         }
     }
 
@@ -252,7 +251,6 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
         }
     }
 
-
     private void btnSymbols(String symbol) {
 
         viewModel.setSavedSymbol(symbol);
@@ -269,33 +267,44 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
      */
     private void equals() {
 
-
         // Converts string into a double
         double numberOne = Double.parseDouble(viewModel.getNumberOne());
         double numberTwo = Double.parseDouble(viewModel.getNumberTwo());
+        String symbol = viewModel.getSavedSymbol();
 
 
 
-        switch(viewModel.getSavedSymbol()) {
-            case ADD:
-                viewModel.setSolution(Addition.formula(numberOne, numberTwo));
-                break;
-            case MINUS:
-                viewModel.setSolution(Minus.formula(numberOne, numberTwo));
-                break;
-            case MULTIPLE:
-                viewModel.setSolution(Multiple.formula(numberOne, numberTwo));
-                break;
-            case DIVIDE:
-                viewModel.setSolution(Divide.formula(numberOne, numberTwo));
-                break;
-        }
+        // Persistable set of key/value pairs which are used as the input for workers.
+        Data equationData = new Data.Builder()
+                .putDouble(KEY_NUMBER_ONE, numberOne)
+                .putDouble(KEY_NUMBER_TWO, numberTwo)
+                .putString(KEY_SYMBOL, symbol)
+                .build();
 
 
+        // Creates a single work request to be completed on a background thread.
+        OneTimeWorkRequest mathWork = new OneTimeWorkRequest.Builder(MathWorker.class)
+                .setInputData(equationData) // Adds input data to the work.
+                .build(); // Builds work request
 
-        formula.setVisibility(View.VISIBLE);
-        formula.setText(viewModel.getSavedFormula() + " = " + viewModel.getSolution());
-        solution.setText(String.valueOf(viewModel.getSolution()));
+        // Enqueues deferrable work that is guaranteed to execute sometime after its constraints are met.
+        WorkManager.getInstance(getActivity()).enqueue(mathWork);
+
+
+        // Gets results of Work after it is finished.
+        WorkManager.getInstance(getActivity()).getWorkInfoByIdLiveData(mathWork.getId())
+                .observe(getActivity(), workInfo -> {
+                    if(workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                        Double result = workInfo.getOutputData().getDouble(KEY_RESULT, NaN);
+                        Log.d(TAG, "equals: " + result);
+
+                        viewModel.setSolution(result);
+
+                        formula.setVisibility(View.VISIBLE);
+                        formula.setText(viewModel.getSavedFormula() + " = " + viewModel.getSolution());
+                        solution.setText(String.valueOf(result));
+                    }
+                });
 
 
     }
@@ -308,13 +317,14 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
 
         formula.setVisibility(View.INVISIBLE);
         solution.setVisibility(View.INVISIBLE);
+        logViewModelInfo("clear");
+    }
 
-        Log.d(TAG, "onViewCreated: ViewModel saved data, " +
+    private void logViewModelInfo(String method) {
+        Log.d(TAG, method + " ViewModel saved data, " +
                 "\n numberOne " + viewModel.getNumberOne() +
                 "\n numberTwo " + viewModel.getNumberTwo() +
                 "\n Formula " + viewModel.getSavedFormula() +
                 "\n Solution " + viewModel.getSolution());
     }
-
-
 }
