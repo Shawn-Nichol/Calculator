@@ -5,18 +5,20 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/calculatorScreen">
 
+
     <fragment
         android:id="@+id/calculatorScreen"
         android:name="com.example.calculator.CalculatorFragment"
         android:label="fragment_calculator"
-        tools:layout="@layout/fragment_calculator" >
-        <action
-            android:id="@+id/action_calculatorScreen_to_fragment2"
-            app:destination="@id/fragment2Screen" />
-    </fragment>
+        tools:layout="@layout/fragment_calculator" />
     <fragment
-        android:id="@+id/fragment2Screen"
-        android:name="com.example.calculator.Fragment2"
-        android:label="fragment2"
-        tools:layout="@layout/fragment2" />
+        android:id="@+id/oneFragmentScreen"
+        android:name="com.example.calculator.OneFragment"
+        android:label="fragment_one"
+        tools:layout="@layout/fragment_one" />
+    <fragment
+        android:id="@+id/twoFragmentScreen"
+        android:name="com.example.calculator.TwoFragment"
+        android:label="fragment_two"
+        tools:layout="@layout/fragment_two" />
 </navigation>

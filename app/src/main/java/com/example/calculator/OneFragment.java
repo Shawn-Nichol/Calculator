@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentOne extends Fragment {
+public class OneFragment extends Fragment {
 
 
-    public FragmentOne() {
+    public OneFragment() {
         // Required empty public constructor
     }
 

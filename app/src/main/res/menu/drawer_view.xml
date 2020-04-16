@@ -7,7 +7,11 @@
             android:title="Calculator"/>
 
         <item
+            android:id="@+id/nav_fragment1"
+            android:title="One"/>
+
+        <item
             android:id="@+id/nav_fragment2"
-            android:title="fragment 2"/>
+            android:title="Two"/>
     </group>
 </menu>
