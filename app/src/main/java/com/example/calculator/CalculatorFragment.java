@@ -15,14 +15,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.calculator.Math.MathWorker;
-import com.example.calculator.Math.SelectFormula;
+import com.example.calculator.databinding.FragmentCalculatorBinding;
+import com.example.calculator.databinding.NumpadBinding;
 
-import static android.widget.Toast.LENGTH_SHORT;
 import static com.example.calculator.Constants.ADD;
 import static com.example.calculator.Constants.ADD_TO_NUMBER_TWO;
 import static com.example.calculator.Constants.DIVIDE;
@@ -49,13 +48,21 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
 
     private CalculatorViewModel viewModel;
 
+    FragmentCalculatorBinding binding;
+
+    NumpadBinding numpadBinding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
 
-        return inflater.inflate(R.layout.fragment_calculator, container, false);
+        binding = FragmentCalculatorBinding.inflate(inflater, container, false);
+
+        numpadBinding = binding.numpad;
+        View view = binding.getRoot();
+
+        return view;
     }
 
     @Override
@@ -102,57 +109,26 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
     private void initButtons(View v) {
         Log.d(TAG, "initButtons: ");
 
-        Button btnZero = v.findViewById(R.id.btn_zero);
-        btnZero.setOnClickListener(this);
-
-        Button btnOne = v.findViewById(R.id.btn_one);
-        btnOne.setOnClickListener(this);
-
-        Button btnTwo = v.findViewById(R.id.btn_two);
-        btnTwo.setOnClickListener(this);
-
-        Button btnThree = v.findViewById(R.id.btn_three);
-        btnThree.setOnClickListener(this);
-
-        Button btnFour = v.findViewById(R.id.btn_four);
-        btnFour.setOnClickListener(this);
-
-        Button btnFive = v.findViewById(R.id.btn_five);
-        btnFive.setOnClickListener(this);
-
-        Button btnSix = v.findViewById(R.id.btn_six);
-        btnSix.setOnClickListener(this);
-
-        Button btnSeven = v.findViewById(R.id.btn_seven);
-        btnSeven.setOnClickListener(this);
-
-        Button btnEight = v.findViewById(R.id.btn_eight);
-        btnEight.setOnClickListener(this);
-
-        Button btnNine = v.findViewById(R.id.btn_nine);
-        btnNine.setOnClickListener(this);
-
-        Button btnDecimal = v.findViewById(R.id.btn_decimal);
-        btnDecimal.setOnClickListener(this);
+        numpadBinding.btnZero.setOnClickListener(this);
+        numpadBinding.btnOne.setOnClickListener(this);
+        numpadBinding.btnTwo.setOnClickListener(this);
+        numpadBinding.btnThree.setOnClickListener(this);
+        numpadBinding.btnFour.setOnClickListener(this);
+        numpadBinding.btnFive.setOnClickListener(this);
+        numpadBinding.btnSix.setOnClickListener(this);
+        numpadBinding.btnSeven.setOnClickListener(this);
+        numpadBinding.btnEight.setOnClickListener(this);
+        numpadBinding.btnNine.setOnClickListener(this);
+        numpadBinding.btnDecimal.setOnClickListener(this);
 
         // Symbols
-        Button btnPlus = v.findViewById(R.id.btn_plus);
-        btnPlus.setOnClickListener(this);
+        numpadBinding.btnPlus.setOnClickListener(this);
+        numpadBinding.btnMinus.setOnClickListener(this);
+        numpadBinding.btnMultiple.setOnClickListener(this);
+        numpadBinding.btnDivide.setOnClickListener(this);
+        numpadBinding.btnEquals.setOnClickListener(this);
+        numpadBinding.btnClear.setOnClickListener(this);
 
-        Button btnMinus = v.findViewById(R.id.btn_minus);
-        btnMinus.setOnClickListener(this);
-
-        Button btnMultiple = v.findViewById(R.id.btn_multiple);
-        btnMultiple.setOnClickListener(this);
-
-        Button btnDivide = v.findViewById(R.id.btn_divide);
-        btnDivide.setOnClickListener(this);
-
-        Button btnEquals = v.findViewById(R.id.btn_equals);
-        btnEquals.setOnClickListener(this);
-
-        Button btnClear = v.findViewById(R.id.btn_clear);
-        btnClear.setOnClickListener(this);
     }
 
     @Override
@@ -252,12 +228,9 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
     }
 
     private void btnSymbols(String symbol) {
-
         viewModel.setSavedSymbol(symbol);
         viewModel.setFormulaState(SET_SECOND_NUMBER);
-
         viewModel.setSavedFormula(viewModel.getNumberOne() + " " + symbol);
-
         solution.setText(viewModel.getSavedFormula());
 
     }
@@ -272,15 +245,12 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
         double numberTwo = Double.parseDouble(viewModel.getNumberTwo());
         String symbol = viewModel.getSavedSymbol();
 
-
-
         // Persistable set of key/value pairs which are used as the input for workers.
         Data equationData = new Data.Builder()
                 .putDouble(KEY_NUMBER_ONE, numberOne)
                 .putDouble(KEY_NUMBER_TWO, numberTwo)
                 .putString(KEY_SYMBOL, symbol)
                 .build();
-
 
         // Creates a single work request to be completed on a background thread.
         OneTimeWorkRequest mathWork = new OneTimeWorkRequest.Builder(MathWorker.class)
@@ -289,7 +259,6 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
 
         // Enqueues deferrable work that is guaranteed to execute sometime after its constraints are met.
         WorkManager.getInstance(getActivity()).enqueue(mathWork);
-
 
         // Gets results of Work after it is finished.
         WorkManager.getInstance(getActivity()).getWorkInfoByIdLiveData(mathWork.getId())
@@ -305,8 +274,6 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
                         solution.setText(String.valueOf(result));
                     }
                 });
-
-
     }
 
     /**
