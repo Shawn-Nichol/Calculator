@@ -294,4 +294,11 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
                 "\n Formula " + viewModel.getSavedFormula() +
                 "\n Solution " + viewModel.getSolution());
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+        numpadBinding = null;
+    }
 }
