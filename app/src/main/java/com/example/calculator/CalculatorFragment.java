@@ -44,13 +44,14 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
 
     // UI
     private TextView formula, solution;
-
+    // ViewBindings
+    FragmentCalculatorBinding binding;
+    NumpadBinding numpadBinding;
 
     private CalculatorViewModel viewModel;
 
-    FragmentCalculatorBinding binding;
-
-    NumpadBinding numpadBinding;
+    // Saved State
+    static final String STATE_FORMULA = "savedFormula";
 
     @Nullable
     @Override
@@ -73,6 +74,11 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
         initTextView(view);
         initButtons(view);
         initViewModel();
+
+        if(savedInstanceState != null) {
+            Log.d(TAG, "onViewCreated: load saved instance state " + savedInstanceState.getString(STATE_FORMULA));
+
+        }
     }
 
     private void initViewModel(){
@@ -293,6 +299,15 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
                 "\n numberTwo " + viewModel.getNumberTwo() +
                 "\n Formula " + viewModel.getSavedFormula() +
                 "\n Solution " + viewModel.getSolution());
+    }
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState: ");
+
+        outState.putString(STATE_FORMULA, viewModel.getSavedFormula());
     }
 
     @Override

@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel;
 
 import static com.example.calculator.Constants.SET_NUMBER_ONE;
 import static com.example.calculator.Constants.SET_SECOND_NUMBER;
-import static java.lang.Double.NaN;
-
 
 public class CalculatorViewModel extends ViewModel {
 
@@ -15,11 +13,7 @@ public class CalculatorViewModel extends ViewModel {
 
     private int mFormulaState;
 
-
-
-    private String mNumberOne;
-    private String mNumberTwo;
-    private String mSavedSymbol;
+    private String mNumberOne, mNumberTwo, mSavedSymbol;
     private Double mSolution;
 
     private String mSavedFormula;

@@ -12,7 +12,7 @@ import static com.example.calculator.Constants.MULTIPLE;
 public class SelectFormula {
     private static final String TAG = "Calculate SelectFormula";
 
-
+    // TODO solve the problem as entered on the screen.
     public static Double formula(String symbol, Double numberOne, Double numberTwo) {
 
         switch(symbol) {
