@@ -12,12 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.calculator.R;
 import com.example.calculator.databinding.FragmentCalculatorBinding;
-
-
 
 public class CalculatorFragment extends Fragment {
 
@@ -30,8 +27,6 @@ public class CalculatorFragment extends Fragment {
 
     // Saved State
     static final String STATE_FORMULA = "savedFormula";
-
-
 
     @Nullable
     @Override
@@ -46,7 +41,6 @@ public class CalculatorFragment extends Fragment {
 
         View view = binding.getRoot();
 
-
         return view;
     }
 
@@ -55,84 +49,22 @@ public class CalculatorFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated: ");
 
-
-
         if(savedInstanceState != null) {
             Log.d(TAG, "onViewCreated: load saved instance state " + savedInstanceState.getString(STATE_FORMULA));
 
         }
-
-
     }
 
     private void initViewModel(){
         // Creates viewModel class, only done once.
         Log.d(TAG, "initViewModel: ");
         viewModel = new ViewModelProvider(this).get(CalculatorViewModel.class);
-
-
     }
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Does basic math.
-     */
-//    private void equals() {
-//
-//        // Converts string into a double
-//        double numberOne = Double.parseDouble(viewModel.getNumberOne());
-//        double numberTwo = Double.parseDouble(viewModel.getNumberTwo());
-//        String symbol = viewModel.getSavedSymbol();
-//
-//        // Persistable set of key/value pairs which are used as the input for workers.
-//        Data equationData = new Data.Builder()
-//                .putDouble(KEY_NUMBER_ONE, numberOne)
-//                .putDouble(KEY_NUMBER_TWO, numberTwo)
-//                .putString(KEY_SYMBOL, symbol)
-//                .build();
-//
-//        // Creates a single work request to be completed on a background thread.
-//        OneTimeWorkRequest mathWork = new OneTimeWorkRequest.Builder(MathWorker.class)
-//                .setInputData(equationData) // Adds input data to the work.
-//                .build(); // Builds work request
-//
-//        // Enqueues deferrable work that is guaranteed to execute sometime after its constraints are met.
-//        WorkManager.getInstance(getActivity()).enqueue(mathWork);
-//
-//        // Gets results of Work after it is finished.
-//        WorkManager.getInstance(getActivity()).getWorkInfoByIdLiveData(mathWork.getId())
-//                .observe(getActivity(), workInfo -> {
-//                    if(workInfo.getState() == WorkInfo.State.SUCCEEDED) {
-//                        Double result = workInfo.getOutputData().getDouble(KEY_RESULT, NaN);
-//                        Log.d(TAG, "equals: " + result);
-//
-//                        viewModel.setSolution(result);
-//
-//                        formula.setVisibility(View.VISIBLE);
-//                        formula.setText(viewModel.getSavedFormula() + " = " + viewModel.getSolution());
-//                        solution.setText(String.valueOf(result));
-//                    }
-//                });
-//    }
-
-
-
-
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState: ");
-
-
     }
 
     @Override
