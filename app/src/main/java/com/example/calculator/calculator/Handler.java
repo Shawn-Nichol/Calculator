@@ -6,7 +6,6 @@ import android.view.View;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.lifecycle.ViewModel;
 
 import com.example.calculator.BR;
 
@@ -24,61 +23,66 @@ public class Handler extends BaseObservable {
     public Handler(Context context, CalculatorViewModel viewModel) {
         this.context = context;
         this.viewModel = viewModel;
-        mNumber = "";
+        mNumber = viewModel.getNumber();
+        mAnswer = viewModel.getAnswer();
+        formula = viewModel.getFormula();
     }
 
     @Bindable
     public String getNumber() {
-        return mNumber;
+        return viewModel.getNumber();
     }
 
     public void setNumber(View view, String number) {
         if(number.equals("clear")) {
-            mNumber = "";
+            viewModel.setNumber("");
         } else {
-            mNumber += number;
+            viewModel.setNumber(viewModel.getNumber() +number);
         }
-        Log.d(TAG, "btnNumber: mNumber " + mNumber);
+        Log.d(TAG, "btnNumber: mNumber " + viewModel.getNumber());
+
         notifyPropertyChanged(BR.number);
     }
 
     public void setSymbol(View view, String symbol) {
-        mNumber += symbol;
-        Log.d(TAG, "btnSymbol: " + mNumber);
+        viewModel.setNumber(viewModel.getNumber() + symbol);
+        Log.d(TAG, "btnSymbol: " + viewModel.getNumber());
+
         notifyPropertyChanged(BR.number);
     }
 
 
     public double getEquals() {
-        return mAnswer;
+        return viewModel.getAnswer();
     }
 
     public void setEquals(View view) {
 
-        for(int i = 0; i < mNumber.length(); i++) {
-            String number = String.valueOf(mNumber.charAt(i));
+        for(int i = 0; i < viewModel.getNumber().length(); i++) {
+            String number = String.valueOf(viewModel.getNumber().charAt(i));
             if(number.equals("+"))  {
-                double numOne = Double.parseDouble(mNumber.substring(0, i));
-                double numTwo = Double.parseDouble(mNumber.substring(i+1));
+                double numOne = Double.parseDouble(viewModel.getNumber().substring(0, i));
+                double numTwo = Double.parseDouble(viewModel.getNumber().substring(i+1));
                 Log.d(TAG, "btnEquals: " + numOne + " + " + numTwo);
-                mAnswer = numOne + numTwo;
+
+                viewModel.setAnswer(numOne + numTwo);
 
             }
         }
 
-        setFormula(mNumber);
-        mNumber = String.valueOf(mAnswer);
-        Log.d(TAG, "btnEquals: " + mAnswer);
+        setFormula(viewModel.getNumber());
+        viewModel.setNumber(String.valueOf(viewModel.getAnswer()));
+        Log.d(TAG, "btnEquals: " + viewModel.getAnswer());
         notifyPropertyChanged(BR.number);
     }
 
     @Bindable
     public String getFormula() {
-        return formula;
+        return viewModel.getFormula();
     }
 
     public void setFormula(String formula) {
-        this.formula = formula;
+        viewModel.setFormula(formula);
         notifyPropertyChanged(BR.formula);
     }
 }

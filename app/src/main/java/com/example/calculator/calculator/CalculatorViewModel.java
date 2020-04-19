@@ -14,13 +14,34 @@ public class CalculatorViewModel extends ViewModel {
 
     private  String mNumber;
     private double mAnswer;
+    private String mFormula;
     // Constructor.
     public CalculatorViewModel() {
         Log.d(TAG, "CalculatorViewModel: ");
         mNumber = "";
     }
 
+    public String getNumber() {
+        return mNumber;
+    }
 
+    public void setNumber(String mNumber) {
+        this.mNumber = mNumber;
+    }
 
+    public double getAnswer() {
+        return mAnswer;
+    }
 
+    public void setAnswer(double mAnswer) {
+        this.mAnswer = mAnswer;
+    }
+
+    public String getFormula() {
+        return mFormula;
+    }
+
+    public void setFormula(String formula) {
+        this.mFormula = formula;
+    }
 }
