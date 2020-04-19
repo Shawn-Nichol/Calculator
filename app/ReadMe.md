@@ -4,15 +4,19 @@ Calculator only handles 2 number formulas.
 
 This App contains
 - Single Activity
-- ViewBinding
+- DataBinding
+  - Handles Calculator btn clicks
+  - Uses Observables to update the screen as new values are entered by the user. 
+  - Handles screen visibility(Coming).  
 - Multiple layout for different landscapes
 - Architecture: MVVM,
-  - Formula data in calculator is saved on rotation changes. 
-- Worker thread to complete calculation off the main thread. 
+  - Saves the following data from destroyed on screen rotation. User entered formula, Answer. 
+- Worker Thread
+  - Handles the calculation of formulas. 
 - Navigation Component
   - NavGraph
   - Host Fragment
   - NavDrawer
-  - Process Death?
+- Process Death?
   
   
