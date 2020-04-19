@@ -1,11 +1,11 @@
-package com.example.calculator;
+package com.example.calculator.calculator;
 
 import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import static com.example.calculator.Constants.SET_NUMBER_ONE;
-import static com.example.calculator.Constants.SET_SECOND_NUMBER;
+import static com.example.calculator.Util.Constants.SET_NUMBER_ONE;
+import static com.example.calculator.Util.Constants.SET_SECOND_NUMBER;
 
 public class CalculatorViewModel extends ViewModel {
 

@@ -69,12 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_calculator:
                 Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.calculatorScreen);
                 break;
-            case R.id.nav_fragment1:
-                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.oneFragmentScreen);
-                break;
-            case R.id.nav_fragment2:
-                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.twoFragmentScreen);
-                break;
+
         }
 
         menuItem.setChecked(true);

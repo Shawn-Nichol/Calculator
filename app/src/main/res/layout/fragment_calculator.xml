@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    <data>
+        <variable
+            name="handlers"
+            type="com.example.calculator.calculator.CalculatorHandler" />
+    </data>
 
+    <LinearLayout
 
-
-    <include layout="@layout/screen"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_width="0dp"/>
-
-    <include layout="@layout/numpad"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:id="@+id/numpad"/>
+        android:orientation="vertical">
 
 
-</LinearLayout>
+        <include
+            layout="@layout/screen"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:id="@+id/screen"
+
+            />
+
+        <include
+            layout="@layout/numpad"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:id="@+id/numpad"
+            bind:handlers="@{handlers}"/>
+
+
+    </LinearLayout>
+</layout>

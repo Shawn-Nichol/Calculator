@@ -8,17 +8,7 @@
 
     <fragment
         android:id="@+id/calculatorScreen"
-        android:name="com.example.calculator.CalculatorFragment"
+        android:name="com.example.calculator.calculator.CalculatorFragment"
         android:label="fragment_calculator"
         tools:layout="@layout/fragment_calculator" />
-    <fragment
-        android:id="@+id/oneFragmentScreen"
-        android:name="com.example.calculator.OneFragment"
-        android:label="fragment_one"
-        tools:layout="@layout/fragment_one" />
-    <fragment
-        android:id="@+id/twoFragmentScreen"
-        android:name="com.example.calculator.TwoFragment"
-        android:label="fragment_two"
-        tools:layout="@layout/fragment_two" />
 </navigation>
