@@ -23,27 +23,29 @@ public class CalculatorFragment extends Fragment {
 
     private static final String TAG = "CalculatorFragment";
 
-    // UI
-    private TextView formula, solution;
-
-
+    // BindingData
+    FragmentCalculatorBinding binding;
 
     private CalculatorViewModel viewModel;
 
     // Saved State
     static final String STATE_FORMULA = "savedFormula";
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_calculator, container, false);
 
-        FragmentCalculatorBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_calculator, container, false);
+        initViewModel();
 
-        CalculatorHandler handler = new CalculatorHandler(getContext());
+        Handler handler = new Handler(getContext(), viewModel);
         binding.setHandlers(handler);
 
         View view = binding.getRoot();
+
 
         return view;
     }
@@ -54,7 +56,6 @@ public class CalculatorFragment extends Fragment {
         Log.d(TAG, "onViewCreated: ");
 
 
-        initViewModel();
 
         if(savedInstanceState != null) {
             Log.d(TAG, "onViewCreated: load saved instance state " + savedInstanceState.getString(STATE_FORMULA));
@@ -123,13 +124,7 @@ public class CalculatorFragment extends Fragment {
 //    }
 
 
-    private void logViewModelInfo(String method) {
-        Log.d(TAG, method + " ViewModel saved data, " +
-                "\n numberOne " + viewModel.getNumberOne() +
-                "\n numberTwo " + viewModel.getNumberTwo() +
-                "\n Formula " + viewModel.getSavedFormula() +
-                "\n Solution " + viewModel.getSolution());
-    }
+
 
 
     @Override
@@ -137,12 +132,12 @@ public class CalculatorFragment extends Fragment {
         super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState: ");
 
-        outState.putString(STATE_FORMULA, viewModel.getSavedFormula());
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
+        binding = null;
     }
 }
