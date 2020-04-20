@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.databinding.Bindable;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import com.example.calculator.BR;
@@ -12,11 +13,14 @@ public class CalculatorViewModel extends ViewModel {
 
     private static final String TAG = "CalculatorViewModel";
 
+    // Saved state for handling process death.
+    private SavedStateHandle mState;
+
     private  String mNumber;
     private double mAnswer;
     private String mFormula;
     // Constructor.
-    public CalculatorViewModel() {
+    public CalculatorViewModel(SavedStateHandle savedStateHandle) {
         Log.d(TAG, "CalculatorViewModel: ");
         mNumber = "";
     }

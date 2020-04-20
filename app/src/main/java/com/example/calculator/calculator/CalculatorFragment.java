@@ -12,21 +12,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.calculator.R;
 import com.example.calculator.databinding.FragmentCalculatorBinding;
+
+
 
 public class CalculatorFragment extends Fragment {
 
     private static final String TAG = "CalculatorFragment";
 
+    // Saved Instance state
+    public static final String TAG_FORMULA = "formula";
+    public static final String TAG_ANSWER = "answer";
+    public static final String TAG_NUMBER = "number";
+
+
     // BindingData
     FragmentCalculatorBinding binding;
 
     private CalculatorViewModel viewModel;
-
-    // Saved State
-    static final String STATE_FORMULA = "savedFormula";
 
     @Nullable
     @Override
@@ -50,21 +56,42 @@ public class CalculatorFragment extends Fragment {
         Log.d(TAG, "onViewCreated: ");
 
         if(savedInstanceState != null) {
-            Log.d(TAG, "onViewCreated: load saved instance state " + savedInstanceState.getString(STATE_FORMULA));
-
+            reloadData(savedInstanceState);
         }
     }
 
     private void initViewModel(){
         // Creates viewModel class, only done once.
         Log.d(TAG, "initViewModel: ");
+        // get
         viewModel = new ViewModelProvider(this).get(CalculatorViewModel.class);
     }
 
+    private void reloadData(Bundle savedInstanceState) {
+        double savedAnswer = savedInstanceState.getDouble(TAG_ANSWER);
+        String savedFormula = savedInstanceState.getString(TAG_FORMULA);
+        String savedNumber = savedInstanceState.getString(TAG_NUMBER);
+        Log.d(TAG, "onViewCreated: load saved instance state " +
+                "\n number: " + savedNumber +
+                "\n formula: " + savedFormula +
+                "\n answer: " + savedAnswer);
+
+        viewModel.setNumber(savedNumber);
+        viewModel.setFormula(savedFormula);
+        viewModel.setAnswer(savedAnswer);
+    }
+
+
+
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
         Log.d(TAG, "onSaveInstanceState: ");
+
+        outState.putDouble(TAG_ANSWER, viewModel.getAnswer());
+        outState.putString(TAG_FORMULA, viewModel.getFormula());
+        outState.putString(TAG_NUMBER, viewModel.getNumber());
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
