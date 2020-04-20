@@ -184,7 +184,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
             android:text="%"
-            android:onClick="@{(view) -> handlers.setSymbol(view, `%`)}"
+            android:onClick="@{(view) -> handlers.setSymbol(view, `/`)}"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_nine"
             app:layout_constraintEnd_toEndOf="parent"

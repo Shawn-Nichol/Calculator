@@ -20,6 +20,9 @@ public class CalculatorWorkerThread extends Worker {
     // Result KEY
     public static final String WORKER_ANSWER = "answer";
 
+    String mFormula;
+    double answer;
+
     private static final String TAG = "CalculatorWorkerThread";
 
     public CalculatorWorkerThread(@NonNull Context context, @NonNull WorkerParameters workerParams) {
@@ -31,18 +34,25 @@ public class CalculatorWorkerThread extends Worker {
     public Result doWork() {
         Log.d(TAG, "doWork: ");
 
-        String formula = getInputData().getString(WORKER_NUMBER);
-        double answer = NaN;
+        mFormula = getInputData().getString(WORKER_NUMBER);
+        answer = NaN;
 
 
-        for(int i = 0; i < formula.length(); i++) {
-            String number = String.valueOf(formula.charAt(i));
-            if(number.equals("+"))  {
-                double numOne = Double.parseDouble(formula.substring(0, i));
-                double numTwo = Double.parseDouble(formula.substring(i+1));
-                Log.d(TAG, "btnEquals: " + numOne + " + " + numTwo);
-
-                answer = numOne + numTwo;
+        for(int i = 0; i < mFormula.length(); i++) {
+            String number = String.valueOf(mFormula.charAt(i));
+            switch(number) {
+                case "+":
+                    solve(i, "plus");
+                    break;
+                case "-":
+                    solve(i, "minus");
+                    break;
+                case "*":
+                    solve(i, "multiple");
+                    break;
+                case "/":
+                    solve(i, "divide");
+                    break;
             }
         }
 
@@ -52,4 +62,31 @@ public class CalculatorWorkerThread extends Worker {
 
         return Result.success(output);
     }
+
+
+    public void solve(int position, String arithmetic) {
+        double numOne = Double.parseDouble(mFormula.substring(0, position));
+        double numTwo = Double.parseDouble(mFormula.substring(position+1));
+
+        switch(arithmetic) {
+            case "plus":
+                answer = numOne + numTwo;
+                break;
+            case "minus":
+                answer = numOne - numTwo;
+                break;
+            case "multiple":
+                answer = numOne * numTwo;
+                break;
+            case "divide":
+                answer = numOne / numTwo;
+                break;
+
+        }
+        Log.d(TAG, "btnEquals: " + numOne + " + " + numTwo + " = " + answer);
+
+    }
+
+
+
 }
