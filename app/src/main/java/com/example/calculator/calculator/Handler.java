@@ -119,4 +119,7 @@ public class Handler extends BaseObservable {
         viewModel.setFormula(formula);
         notifyPropertyChanged(BR.formula);
     }
+
+
+
 }
