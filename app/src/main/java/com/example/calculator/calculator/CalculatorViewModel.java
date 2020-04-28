@@ -20,7 +20,7 @@ public class CalculatorViewModel extends ViewModel {
     private double mAnswer;
     private String mFormula;
     // Constructor.
-    public CalculatorViewModel(SavedStateHandle savedStateHandle) {
+    public CalculatorViewModel() {
         Log.d(TAG, "CalculatorViewModel: ");
         mNumber = "";
     }

@@ -56,6 +56,7 @@ public class CalculatorWorkerThread extends Worker {
             }
         }
 
+
         Data output = new Data.Builder()
                 .putDouble(WORKER_ANSWER, answer)
                 .build();
