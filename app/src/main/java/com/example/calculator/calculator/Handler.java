@@ -32,8 +32,8 @@ public class Handler extends BaseObservable {
     public Handler(Context context, CalculatorViewModel viewModel) {
         this.context = context;
         this.viewModel = viewModel;
-
     }
+
 
     @Bindable
     public String getNumber() {
@@ -55,6 +55,7 @@ public class Handler extends BaseObservable {
         } else {
             viewModel.setNumber(viewModel.getNumber() + number);
         }
+
         Log.d(TAG, "btnNumber: mNumber " + viewModel.getNumber());
 
         notifyPropertyChanged(BR.number);
@@ -71,10 +72,6 @@ public class Handler extends BaseObservable {
         Log.d(TAG, "btnSymbol: " + viewModel.getNumber());
 
         notifyPropertyChanged(BR.number);
-    }
-
-    public double getEquals() {
-        return viewModel.getAnswer();
     }
 
     /**
