@@ -18,6 +18,9 @@ import static com.example.calculator.calculator.CalculatorWorkerThread.WORKER_AN
 import static com.example.calculator.calculator.CalculatorWorkerThread.WORKER_NUMBER;
 import static java.lang.Double.NaN;
 
+/**
+ * Handles button clicks
+ */
 public class Handler extends BaseObservable {
 
     private static final String TAG = "CalculatorHandler";

@@ -17,17 +17,14 @@ import android.widget.Button;
 import com.example.calculator.R;
 import com.example.calculator.databinding.FragmentCalculatorBinding;
 
+import static com.example.calculator.Util.Constants.TAG_ANSWER;
+import static com.example.calculator.Util.Constants.TAG_FORMULA;
+import static com.example.calculator.Util.Constants.TAG_NUMBER;
 
 
 public class CalculatorFragment extends Fragment {
 
     private static final String TAG = "CalculatorFragment";
-
-    // Saved Instance state
-    public static final String TAG_FORMULA = "formula";
-    public static final String TAG_ANSWER = "answer";
-    public static final String TAG_NUMBER = "number";
-
 
     // BindingData
     FragmentCalculatorBinding binding;
@@ -80,8 +77,6 @@ public class CalculatorFragment extends Fragment {
         viewModel.setFormula(savedFormula);
         viewModel.setAnswer(savedAnswer);
     }
-
-
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
