@@ -83,6 +83,10 @@ public class CalculatorWorkerThread extends Worker {
                 answer = numOne * numTwo;
                 break;
             case "divide":
+                if(numOne == 0 || numTwo == 0) {
+                    answer  = 0;
+                    break;
+                }
                 answer = numOne / numTwo;
                 break;
 
