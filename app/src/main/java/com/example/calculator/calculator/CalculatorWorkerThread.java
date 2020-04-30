@@ -27,6 +27,9 @@ public class CalculatorWorkerThread extends Worker {
 
     public CalculatorWorkerThread(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
+
+
+
     }
 
     @NonNull

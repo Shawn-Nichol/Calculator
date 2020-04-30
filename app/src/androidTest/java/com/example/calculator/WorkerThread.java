@@ -3,7 +3,7 @@ package com.example.calculator;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.work.Configuration;
 import androidx.work.Data;
@@ -28,7 +28,7 @@ import static java.lang.Double.NaN;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-@RunWith(AndroidJUnit4.class)
+
 public class WorkerThread {
 
     private static final String TEST_ENTER_FORMULA = "22+33";

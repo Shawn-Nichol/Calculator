@@ -37,6 +37,7 @@ android {
     useLibrary 'android.test.base'
     useLibrary 'android.test.mock'
 
+
 }
 
 dependencies {
@@ -46,7 +47,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'org.jetbrains:annotations-java5:15.0'
 
@@ -67,27 +67,23 @@ dependencies {
     implementation "androidx.navigation:navigation-ui:$nav_version"
 
 
-
-
     // Local JVM/unit test for junit
     testImplementation 'androidx.test.ext:junit:1.1.1'
 
-//    // -------- LOCAL UNIT TESTS (use JUnit5)
-//    // JUnit Jupiter
+    // -------- LOCAL UNIT TESTS (use JUnit5)
+    // JUnit Jupiter
     def junit_jupiter_version = "5.3.2"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_jupiter_version"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_jupiter_version"
-//
+
     // -------- MOCKITO
     def mockito_version = "2.19.0"
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
-
-//    // AndroidX test
-//    def androidx_test_version = "1.1.0"
-//    androidTestImplementation "androidx.test:core:$androidx_test_version"
-//    androidTestImplementation "androidx.test:runner:$androidx_test_version"
-////    androidTestImplementation 'junit:junit:4.12'
+    // Espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
 
 }
