@@ -29,6 +29,11 @@ This App contains
   - Layout is equally weight to split the screen into two sections. One for the number pad and one for the 
     screen.  
   - Multiple layout for different landscapes
+  
+- Testing
+  - Local Unit Testing(junit4, junit5, Mockito).
+  - Local Instrumentation Testing (junit 4).
+  - UI testing (Espresso).
 
 
   

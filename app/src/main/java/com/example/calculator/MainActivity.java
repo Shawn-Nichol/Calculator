@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
         NavigationUI.setupWithNavController(navigationView, navController);
         navigationView.setNavigationItemSelectedListener(this);
@@ -67,7 +68,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId()) {
             case R.id.nav_calculator:
-                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.calculatorScreen);
+                navController.navigate(R.id.calculatorScreen);
+            case R.id.nav_flash_card:
+                navController.navigate(R.id.flashCardsSettingScreen);
                 break;
 
         }

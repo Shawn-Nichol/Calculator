@@ -11,4 +11,33 @@
         android:name="com.example.calculator.calculator.CalculatorFragment"
         android:label="fragment_calculator"
         tools:layout="@layout/fragment_calculator" />
+    <fragment
+        android:id="@+id/flashCardsSettingScreen"
+        android:name="com.example.calculator.flashcards.settings.FlashCardsSettingFragment"
+        android:label="fragment_flash_cards_setting"
+        tools:layout="@layout/fragment_flash_cards_setting" >
+        <action
+            android:id="@+id/action_flashCardsSettingFragment_to_flashCardGameFragment"
+            app:destination="@id/flashCardGameScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/flashCardGameScreen"
+        android:name="com.example.calculator.flashcards.game.FlashCardGameFragment"
+        android:label="fragment_flash_card_game"
+        tools:layout="@layout/fragment_flash_card_game" >
+        <action
+            android:id="@+id/action_flashCardGameFragment_to_flashCardResultsFragment"
+            app:destination="@id/flashCardResultsScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/flashCardResultsScreen"
+        android:name="com.example.calculator.flashcards.results.FlashCardResultsFragment"
+        android:label="fragment_flash_card_results"
+        tools:layout="@layout/fragment_flash_card_results" >
+        <action
+            android:id="@+id/action_flashCardResultsFragment_to_flashCardsSettingFragment"
+            app:destination="@id/flashCardsSettingScreen"
+            app:popUpTo="@+id/flashCardsSettingScreen"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>
