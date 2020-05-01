@@ -82,9 +82,10 @@ public class CalculatorFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         Log.d(TAG, "onSaveInstanceState: ");
 
-        outState.putDouble(TAG_ANSWER, viewModel.getAnswer());
-        outState.putString(TAG_FORMULA, viewModel.getFormula());
-        outState.putString(TAG_NUMBER, viewModel.getNumber());
+        // TODO:  outState will save null on Screen rotation causing the app to crash.
+//        outState.putDouble(TAG_ANSWER, viewModel.getAnswer());
+//        outState.putString(TAG_FORMULA, viewModel.getFormula());
+//        outState.putString(TAG_NUMBER, viewModel.getNumber());
 
         super.onSaveInstanceState(outState);
     }

@@ -1,9 +1,13 @@
-package com.example.calculator.calculator;
+package com.example.calculator.calculator.calculator;
 
 import android.content.Context;
 import android.view.View;
 
 import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.example.calculator.calculator.CalculatorViewModel;
+import com.example.calculator.calculator.Handler;
+
 import org.junit.Before;
 import org.junit.Test;
 
