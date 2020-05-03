@@ -13,7 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.calculator.R;
-import com.example.calculator.databinding.FragmentFlashCardGameBinding;
+import com.example.calculator.databinding.FragmentFcGameBinding;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +22,7 @@ import com.example.calculator.databinding.FragmentFlashCardGameBinding;
 public class FlashCardGameFragment extends Fragment {
 
     Context mContext;
-    FragmentFlashCardGameBinding binding;
+    FragmentFcGameBinding binding;
 
     public FlashCardGameFragment() {
         // Required empty public constructor
@@ -30,12 +31,14 @@ public class FlashCardGameFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_flash_card_game, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_fc_game, container, false);
         mContext = getActivity();
 
         GameHandler handler = new GameHandler(mContext);
         binding.setHandlers(handler);
-        return binding.getRoot();
+
+        View view= binding.getRoot();
+        return view;
 
     }
 
