@@ -10,42 +10,26 @@ import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.calculator.BR;
 
-public class NumberPickerFragment extends DialogFragment {
+public class NumberPickerFragment extends AppCompatDialogFragment {
     private static final String TAG = "Calculator NumberPickerFragment";
 
-
+    NumberPickerListener numberPickerListener;
     NumberPicker numberPicker;
+
     FlashCardsSettingViewModel mViewModel;
+    Context mContext;
 
-    NumberPickerListener listener;
 
-    public interface NumberPickerListener {
-        public void onDialogPositiveClick(DialogFragment dialog);
-    }
 
-    public NumberPickerFragment(FlashCardsSettingViewModel mViewModel) {
+    public NumberPickerFragment(FlashCardsSettingViewModel mViewModel, Context context) {
         this.mViewModel = mViewModel;
+        this.mContext = context;
     }
 
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        Log.d(TAG, "onAttach: ");
-        try {
-            // Instantiate the NoticeDialogListener so we can send events to the host
-            Log.d(TAG, "onAttach: try");
-            listener = (NumberPickerListener) getActivity();
-        } catch (ClassCastException e) {
-            // The activity doesn't implement the interface, throw exception
-            Log.d(TAG, "onAttach: fail");
-            throw new ClassCastException(" must implement NumberPickerListener");
-        }
-    }
 
     @NonNull
     @Override
@@ -68,7 +52,8 @@ public class NumberPickerFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d(TAG, "onClick: Postive " + numberPicker.getValue());
                         mViewModel.setNumberOfQuestions(numberPicker.getValue());
-                        listener.onDialogPositiveClick(NumberPickerFragment.this);
+                        numberPickerListener.selectedNumber(numberPicker.getValue());
+
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -86,6 +71,19 @@ public class NumberPickerFragment extends DialogFragment {
     }
 
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
 
+        try{
+            numberPickerListener = (NumberPickerListener)mContext;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() +
+                    "must implement ExampleDialogListener");
+        }
+    }
 
+    public interface NumberPickerListener {
+        void selectedNumber(int number);
+    }
 }

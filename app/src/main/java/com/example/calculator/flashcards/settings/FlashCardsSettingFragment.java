@@ -15,18 +15,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.calculator.R;
-import com.example.calculator.calculator.CalculatorViewModel;
 import com.example.calculator.databinding.FragmentFlashCardsSettingBinding;
 
 
 public class FlashCardsSettingFragment extends Fragment {
 
-    private static final String TAG = "FlashCardsSettingFragment";
+    private static final String TAG = "Calculator FlashCardsSettingFragment";
 
     FragmentFlashCardsSettingBinding mBinding;
     Context mContext;
     FlashCardsSettingViewModel mViewModel;
 
+    SettingHandler mHandler;
 
     @Nullable
     @Override
@@ -38,12 +38,11 @@ public class FlashCardsSettingFragment extends Fragment {
         mContext = getActivity();
         initViewModel();
 
-        SettingHandler handler = new SettingHandler(mContext, getActivity().getSupportFragmentManager(), mViewModel);
-        mBinding.setHandlers(handler);
+        mHandler = new SettingHandler(mContext, getActivity().getSupportFragmentManager(), mViewModel, mBinding);
 
-        View view = mBinding.getRoot();
+        mBinding.setHandlers(mHandler);
 
-        return view;
+        return mBinding.getRoot();
     }
 
     @Override
@@ -54,5 +53,12 @@ public class FlashCardsSettingFragment extends Fragment {
 
     private void initViewModel() {
         mViewModel = new ViewModelProvider(this).get(FlashCardsSettingViewModel.class);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
+        mHandler.saveSwitchState();
     }
 }
