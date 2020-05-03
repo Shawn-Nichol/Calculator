@@ -1,4 +1,6 @@
-package com.example.calculator.calculator;
+package com.example.calculator.calculator.calculator;
+
+import com.example.calculator.calculator.CalculatorViewModel;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-public class ViewModelTest {
+public class CalculatorViewModelTest {
 
     // System under test
     private CalculatorViewModel mVM;
