@@ -21,8 +21,5 @@ public class GameHandler extends BaseObservable {
     }
 
 
-    public void endGame(View view) {
-        Log.d(TAG, "startGame: ");
-        Navigation.findNavController(view).navigate(R.id.action_flashCardGameFragment_to_flashCardResultsFragment);
-    }
+
 }

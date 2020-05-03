@@ -2,14 +2,11 @@ package com.example.calculator.flashcards.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.renderscript.ScriptGroup;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 
-import androidx.annotation.LongDef;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -21,9 +18,6 @@ import androidx.navigation.Navigation;
 import com.example.calculator.BR;
 import com.example.calculator.R;
 import com.example.calculator.databinding.FragmentFlashCardsSettingBinding;
-
-import static android.content.Context.MODE_PRIVATE;
-import static com.example.calculator.R.string.preference_file_key;
 
 public class SettingHandler extends BaseObservable implements NumberPickerFragment.NumberPickerListener {
 
@@ -47,9 +41,11 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
     // Views
     SwitchCompat switchAddition, switchMinus, switchMultiplication, switchDivision;
 
-    public SettingHandler(Context mContext, FragmentManager fragmentManager, FlashCardsSettingViewModel viewModel, FragmentFlashCardsSettingBinding mBinding) {
+    public SettingHandler() {
+    }
+
+    public SettingHandler(Context mContext, FlashCardsSettingViewModel viewModel, FragmentFlashCardsSettingBinding mBinding) {
         this.mContext = mContext;
-        this.fragmentManager = fragmentManager;
         this.mViewModel = viewModel;
         this.mBinding = mBinding;
         bindViews();
@@ -77,6 +73,11 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
         switchMinus.setChecked(sharedPref.getBoolean(KEY_MINUS, minus));
         switchMultiplication.setChecked(sharedPref.getBoolean(KEY_MULTIPLICATION, multiple));
         switchDivision.setChecked(sharedPref.getBoolean(KEY_DIVISION, divide));
+
+        mViewModel.setAddition(addition);
+        mViewModel.setMinus(minus);
+        mViewModel.setMultiplication(multiple);
+        mViewModel.setDivision(divide);
 
         Log.d(TAG, "loadSwitchState: " +
                 "\n addition " + addition +
@@ -123,8 +124,10 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     Log.d(TAG, "Addition ON");
+                    mViewModel.setAddition(true);
                 } else {
                     Log.d(TAG, "Addition OFF");
+                    mViewModel.setAddition(false);
                 }
             }
         });
@@ -137,6 +140,7 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     Log.d(TAG, "Addition ON");
+
                 } else {
                     Log.d(TAG, "Addition OFF");
                 }
@@ -171,7 +175,6 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
             }
         });
     }
-
 
     public void numberPicker(View view) {
         Log.d(TAG, "numberPicker: ");

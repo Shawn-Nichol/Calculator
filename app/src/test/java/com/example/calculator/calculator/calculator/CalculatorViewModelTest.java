@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-public class ViewModelTest {
+public class CalculatorViewModelTest {
 
     // System under test
     private CalculatorViewModel mVM;

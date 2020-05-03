@@ -1,4 +1,4 @@
-package com.example.calculator.calculator.flashcards.game;
+package com.example.calculator.calculator.flashcards.settings;
 
 import com.example.calculator.flashcards.settings.FlashCardsSettingViewModel;
 
@@ -11,7 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ViewModelTest {
+public class SettingsViewModelTest {
 
     FlashCardsSettingViewModel viewModel;
 

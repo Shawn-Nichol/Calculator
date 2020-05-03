@@ -38,7 +38,7 @@ public class FlashCardsSettingFragment extends Fragment {
         mContext = getActivity();
         initViewModel();
 
-        mHandler = new SettingHandler(mContext, getActivity().getSupportFragmentManager(), mViewModel, mBinding);
+        mHandler = new SettingHandler(mContext, mViewModel, mBinding);
 
         mBinding.setHandlers(mHandler);
 

@@ -6,4 +6,6 @@
 
     <color name="colorEquation">#006600</color>
     <color name="colorBlack">#000000</color>
+
+    <color  name="colorFlashCard">#f7ce00</color>
 </resources>
