@@ -24,7 +24,7 @@
         android:id="@+id/flashCardGameScreen"
         android:name="com.example.calculator.flashcards.game.FlashCardGameFragment"
         android:label="fragment_flash_card_game"
-        tools:layout="@layout/fragment_fc_game" >
+        tools:layout="@layout/fragment_flash_cards_game" >
         <action
             android:id="@+id/action_flashCardGameFragment_to_flashCardResultsFragment"
             app:destination="@id/flashCardResultsScreen" />
