@@ -35,4 +35,17 @@ public class GameHandler extends BaseObservable {
         return mViewModel.getUserAnswer();
     }
 
+    public void deleteLastNumber() {
+        String number = mViewModel.getUserAnswer();
+        int stringLength = number.length();
+
+        if(stringLength != 0) {
+            mViewModel.setUserAnswer(number.substring(0, stringLength-1));
+        }
+        notifyPropertyChanged(BR.number);
+    }
+
+    public void compareAnswer() {
+        String userAnswer = mViewModel.getUserAnswer();
+    }
 }
