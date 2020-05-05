@@ -28,6 +28,12 @@
         <action
             android:id="@+id/action_flashCardGameFragment_to_flashCardResultsFragment"
             app:destination="@id/flashCardResultsScreen" />
+        <argument
+            android:name="MyAddition"
+            app:argType="boolean"
+            android:defaultValue="false" />
+
+
     </fragment>
     <fragment
         android:id="@+id/flashCardResultsScreen"

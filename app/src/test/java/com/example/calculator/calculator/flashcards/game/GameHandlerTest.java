@@ -3,10 +3,6 @@ package com.example.calculator.calculator.flashcards.game;
 import android.content.Context;
 import android.view.View;
 
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-
-import com.example.calculator.calculator.Handler;
 import com.example.calculator.flashcards.game.FlashCardsGameViewModel;
 import com.example.calculator.flashcards.game.GameHandler;
 
@@ -14,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 

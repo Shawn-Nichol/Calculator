@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import com.example.calculator.flashcards.settings.FlashCardsSettingViewModel;
  */
 public class FlashCardGameFragment extends Fragment {
 
+    private static final String TAG = "Calculator FlashCardGameFragment";
+
     Context mContext;
     FragmentFlashCardsGameBinding mBinding;
     FlashCardsGameViewModel mViewModel;
@@ -31,6 +34,16 @@ public class FlashCardGameFragment extends Fragment {
         // Required empty public constructor
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+
+        FlashCardGameFragmentArgs args = FlashCardGameFragmentArgs.fromBundle(getArguments());
+        Boolean addition = args.getMyAddition();
+        Log.d(TAG, "onStart: args " + addition);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
