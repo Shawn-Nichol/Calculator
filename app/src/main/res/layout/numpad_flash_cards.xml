@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
             name="handlers"
-            type="com.example.calculator.calculator.Handler" />
+            type="com.example.calculator.flashcards.game.GameHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -144,6 +143,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Enter"
+            android:onClick="@{(view) -> handlers.compareAnswer()}"
             app:layout_constraintBottom_toBottomOf="@+id/backspace"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/backspace"
@@ -154,6 +154,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Delete"
+            android:onClick="@{(view) -> handlers.deleteLastNumber()}"
             app:layout_constraintBottom_toBottomOf="@+id/btn_zero"
             app:layout_constraintEnd_toStartOf="@+id/enter_number"
             app:layout_constraintStart_toEndOf="@+id/btn_zero"

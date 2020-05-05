@@ -18,6 +18,8 @@ import androidx.navigation.Navigation;
 import com.example.calculator.BR;
 import com.example.calculator.R;
 import com.example.calculator.databinding.FragmentFlashCardsSettingBinding;
+import com.example.calculator.flashcards.game.FlashCardGameFragmentArgs;
+import com.example.calculator.flashcards.game.FlashCardGameFragmentDirections;
 
 public class SettingHandler extends BaseObservable implements NumberPickerFragment.NumberPickerListener {
 
@@ -112,7 +114,18 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
 
     public void startGame(View view) {
         Log.d(TAG, "startGame: number of question " + mViewModel.getNumberOfQuestions());
-        Navigation.findNavController(view).navigate(R.id.action_flashCardsSettingFragment_to_flashCardGameFragment);
+
+
+        boolean addition = mViewModel.getAddition();
+
+        FlashCardsSettingFragmentDirections.ActionFlashCardsSettingFragmentToFlashCardGameFragment action =
+                FlashCardsSettingFragmentDirections.actionFlashCardsSettingFragmentToFlashCardGameFragment();
+
+        action.setMyAddition(mViewModel.getAddition());
+
+        Navigation.findNavController(view).navigate(action);
+
+//        Navigation.findNavController(view).navigate(R.id.action_flashCardsSettingFragment_to_flashCardGameFragment);
     }
 
 
