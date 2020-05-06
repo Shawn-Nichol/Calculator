@@ -29,7 +29,19 @@
             android:id="@+id/action_flashCardGameFragment_to_flashCardResultsFragment"
             app:destination="@id/flashCardResultsScreen" />
         <argument
-            android:name="MyAddition"
+            android:name="Addition"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="Minus"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="Multiple"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="Divide"
             app:argType="boolean"
             android:defaultValue="false" />
 

@@ -121,7 +121,10 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
         FlashCardsSettingFragmentDirections.ActionFlashCardsSettingFragmentToFlashCardGameFragment action =
                 FlashCardsSettingFragmentDirections.actionFlashCardsSettingFragmentToFlashCardGameFragment();
 
-        action.setMyAddition(mViewModel.getAddition());
+        action.setAddition(mViewModel.getAddition());
+        action.setMinus(mViewModel.getMinus());
+        action.setMultiple(mViewModel.getMultiplication());
+        action.setDivide(mViewModel.getDivision());
 
         Navigation.findNavController(view).navigate(action);
 
