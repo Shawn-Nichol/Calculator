@@ -41,8 +41,18 @@ public class FlashCardGameFragment extends Fragment {
         Log.d(TAG, "onStart: ");
 
         FlashCardGameFragmentArgs args = FlashCardGameFragmentArgs.fromBundle(getArguments());
-        Boolean addition = args.getMyAddition();
-        Log.d(TAG, "onStart: args " + addition);
+        Boolean addition = args.getAddition();
+        Boolean minus = args.getMinus();
+        Boolean multiple = args.getMultiple();
+        Boolean divide = args.getDivide();
+        Log.d(TAG, "onStart: " +
+                "\n Addition " + addition +
+                "\n Minus " + minus +
+                "\n Multiple " + multiple +
+                "\n Divide " + divide);
+
+
+
     }
 
     @Override
