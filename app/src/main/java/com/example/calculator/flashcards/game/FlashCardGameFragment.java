@@ -16,7 +16,10 @@ import android.view.ViewGroup;
 
 import com.example.calculator.R;
 import com.example.calculator.databinding.FragmentFlashCardsGameBinding;
-import com.example.calculator.flashcards.settings.FlashCardsSettingViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -30,30 +33,17 @@ public class FlashCardGameFragment extends Fragment {
     FragmentFlashCardsGameBinding mBinding;
     FlashCardsGameViewModel mViewModel;
 
+    boolean mAddition;
+    boolean mMinus;
+    boolean mMultiple;
+    boolean mDivide;
+
+
     public FlashCardGameFragment() {
         // Required empty public constructor
     }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-
-        FlashCardGameFragmentArgs args = FlashCardGameFragmentArgs.fromBundle(getArguments());
-        Boolean addition = args.getAddition();
-        Boolean minus = args.getMinus();
-        Boolean multiple = args.getMultiple();
-        Boolean divide = args.getDivide();
-        Log.d(TAG, "onStart: " +
-                "\n Addition " + addition +
-                "\n Minus " + minus +
-                "\n Multiple " + multiple +
-                "\n Divide " + divide);
-
-
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,15 +54,85 @@ public class FlashCardGameFragment extends Fragment {
         mBinding.setHandlers(handler);
 
         View view= mBinding.getRoot();
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        FlashCardGameFragmentArgs args = FlashCardGameFragmentArgs.fromBundle(getArguments());
+        mAddition = args.getAddition();
+        mMinus = args.getMinus();
+        mMultiple = args.getMultiple();
+        mDivide = args.getDivide();
+        Log.d(TAG, "onStart: " +
+                "\n Addition " + mAddition +
+                "\n Minus " + mMinus +
+                "\n Multiple " + mMultiple +
+                "\n Divide " + mDivide);
+
+        mViewModel.setNumberOfQuestions(10);
+
+        if(savedInstanceState == null) {
+            initFlashCards();
+        }
     }
 
     private void initViewModel() {
         mViewModel = new ViewModelProvider(this).get(FlashCardsGameViewModel.class);
+    }
+
+    private void initFlashCards() {
+
+        if(mAddition) mViewModel.addArithmeticType(" + ");
+        if(mMinus) mViewModel.addArithmeticType(" - " );
+        if(mMultiple) mViewModel.addArithmeticType(" X ");
+        if(mDivide) mViewModel.addArithmeticType(" / ");
+
+        for(int i =0; i < mViewModel.getNumberOfQuestions(); i++) {
+            Random random = new Random();
+            int minNum = 0;
+            int maxNum = 10;
+
+            int arithmetic = random.ints(0, mViewModel.getArithmeticType().size()).findFirst().getAsInt();
+
+            mViewModel.addArithmeticSelected(mViewModel.getArithmeticType().get(arithmetic));
+
+            int numOne = random.ints(minNum, maxNum).findFirst().getAsInt();
+
+            if(mViewModel.getArithmeticSelected().get(i).equals(" / ") || mViewModel.getArithmeticSelected().get(i).equals(" - ")) {
+                maxNum = numOne;
+                if(maxNum == minNum ) maxNum = minNum + 1;
+            }
+
+            int numTwo = random.ints(minNum, maxNum).findFirst().getAsInt();
+
+            switch(mViewModel.getArithmeticSelected().get(i)) {
+                case " + ":
+                    mViewModel.addAnswer(numOne + numTwo);
+                    break;
+                case " - ":
+                    mViewModel.addAnswer(numOne - numTwo);
+                    break;
+                case " X ":
+                    mViewModel.addAnswer(numOne * numTwo);
+                    break;
+                case " / ":
+                    if(numOne == 0 || numTwo == 0) {
+                        mViewModel.addAnswer(0);
+                    } else {
+                        mViewModel.addAnswer(numOne / numTwo);
+                    }
+                    break;
+            }
+            mViewModel.addFormula(numOne + mViewModel.getArithmeticSelected().get(i) +  numTwo);
+
+            Log.d(TAG, "initFlashCards: formula " + mViewModel.getFormula.get + " = " + mViewModel.getAnswer(i));
+
+        }
+
     }
 }

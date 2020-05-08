@@ -16,12 +16,19 @@ public class GameHandler extends BaseObservable {
     Context mContext;
     FlashCardsGameViewModel mViewModel;
 
-
+    /**
+     * Constructor.
+     * @param mContext passed from FlashCardGameFragment.
+     * @param viewModel passed from FlashCardGameFragment.
+     */
     public GameHandler(Context mContext, FlashCardsGameViewModel viewModel) {
         this.mContext = mContext;
         this.mViewModel = viewModel;
     }
 
+    /**
+     * Sets the number entered by the user.
+     */
     public void setNumber(View view, String number) {
         Log.d(TAG, "setNumber: " + number);
         mViewModel.setUserAnswer(mViewModel.getUserAnswer() + number);
@@ -29,12 +36,19 @@ public class GameHandler extends BaseObservable {
         notifyPropertyChanged(BR.number);
     }
 
+    /**
+     * Gets the number entered by the user and binds it the view on the screen.
+     * @return
+     */
     @Bindable
     public String getNumber() {
         Log.d(TAG, "getNumber: " + mViewModel.getUserAnswer());
         return mViewModel.getUserAnswer();
     }
 
+    /**
+     * Deletes the last number entered by the user.
+     */
     public void deleteLastNumber() {
         String number = mViewModel.getUserAnswer();
         int stringLength = number.length();
@@ -45,7 +59,9 @@ public class GameHandler extends BaseObservable {
         notifyPropertyChanged(BR.number);
     }
 
-    public void compareAnswer() {
-        String userAnswer = mViewModel.getUserAnswer();
+    public void displayQuestion() {
+
     }
+
+
 }
