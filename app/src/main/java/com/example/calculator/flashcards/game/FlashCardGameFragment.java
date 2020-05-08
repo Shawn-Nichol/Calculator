@@ -130,7 +130,7 @@ public class FlashCardGameFragment extends Fragment {
             }
             mViewModel.addFormula(numOne + mViewModel.getArithmeticSelected().get(i) +  numTwo);
 
-            Log.d(TAG, "initFlashCards: formula " + mViewModel.getFormula.get + " = " + mViewModel.getAnswer(i));
+            Log.d(TAG, "initFlashCards: formula " + mViewModel.getFormula().get(i) + " = " + mViewModel.getAnswer().get(i));
 
         }
 
