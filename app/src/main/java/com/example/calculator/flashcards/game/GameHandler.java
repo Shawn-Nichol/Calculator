@@ -7,6 +7,9 @@ import android.view.View;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
+import androidx.navigation.Navigation;
+
+import com.example.calculator.R;
 
 
 public class GameHandler extends BaseObservable {
@@ -59,8 +62,25 @@ public class GameHandler extends BaseObservable {
         notifyPropertyChanged(BR.number);
     }
 
-    public void displayQuestion() {
 
+    @Bindable
+    public String getQuestion() {
+        return mViewModel.getFormula().get(mViewModel.getCurrentQuestion());
+    }
+
+    public void Enter(View view) {
+
+
+        if(mViewModel.getNumberOfQuestions() -1 > mViewModel.getCurrentQuestion()) {
+            Log.d(TAG, "Enter: next question");
+            mViewModel.setCurrentQuestion(1);
+            notifyPropertyChanged(BR.question);
+        } else {
+            Log.d(TAG, "Enter: no more questions");
+            Navigation.findNavController(view).navigate(R.id.action_flashCardGameFragment_to_flashCardResultsFragment);
+
+
+        }
     }
 
 

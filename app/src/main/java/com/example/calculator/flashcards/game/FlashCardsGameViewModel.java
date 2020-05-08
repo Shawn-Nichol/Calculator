@@ -12,6 +12,7 @@ public class FlashCardsGameViewModel extends ViewModel {
     private int mCurrentQuestion;
     private String mUserAnswer = "";
     int getmCurrentQuestion = 0;
+    int questionCorrect = 0;
 
     private List<Integer> answer = new ArrayList<>();
     private List<String> formula = new ArrayList<>();
@@ -28,7 +29,7 @@ public class FlashCardsGameViewModel extends ViewModel {
     }
 
     public void setCurrentQuestion(int mCurrentQuestion) {
-        this.mCurrentQuestion = mCurrentQuestion;
+        this.mCurrentQuestion += mCurrentQuestion;
     }
 
     String getUserAnswer() {
