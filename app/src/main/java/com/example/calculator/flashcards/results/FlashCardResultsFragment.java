@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.calculator.R;
 import com.example.calculator.databinding.FragmentFlashCardResultsBinding;
+import com.example.calculator.flashcards.game.FlashCardGameFragmentArgs;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +23,10 @@ public class FlashCardResultsFragment extends Fragment {
 
     Context mContext;
     FragmentFlashCardResultsBinding binding;
+
+    // Args
+    int mCorrectAnswers;
+    int mNumberOfQuestions;
 
     public FlashCardResultsFragment() {
         // Required empty public constructor
@@ -33,8 +38,8 @@ public class FlashCardResultsFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_flash_card_results, container, false);
 
         mContext = getActivity();
-
-        ResultsHandler handler = new ResultsHandler(mContext);
+        getArgs();
+        ResultsHandler handler = new ResultsHandler(mContext, mCorrectAnswers, mNumberOfQuestions);
 
         binding.setHandlers(handler);
 
@@ -47,5 +52,11 @@ public class FlashCardResultsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void getArgs() {
+        FlashCardResultsFragmentArgs args = FlashCardResultsFragmentArgs.fromBundle(getArguments());
+        mCorrectAnswers = args.getCorrecQuestions();
+        mNumberOfQuestions = args.getNumberOfQuestions();
     }
 }

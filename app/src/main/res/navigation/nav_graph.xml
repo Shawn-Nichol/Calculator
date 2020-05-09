@@ -57,5 +57,12 @@
             app:destination="@id/flashCardsSettingScreen"
             app:popUpTo="@+id/flashCardsSettingScreen"
             app:popUpToInclusive="true"/>
+        <argument
+            android:name="correcQuestions"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="numberOfQuestions"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

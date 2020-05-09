@@ -41,7 +41,7 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
 
 
     // Views
-    SwitchCompat switchAddition, switchMinus, switchMultiplication, switchDivision;
+    private SwitchCompat switchAddition, switchMinus, switchMultiplication, switchDivision;
 
     public SettingHandler() {
     }
@@ -116,7 +116,7 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
         Log.d(TAG, "startGame: number of question " + mViewModel.getNumberOfQuestions());
 
 
-        boolean addition = mViewModel.getAddition();
+//        boolean addition = mViewModel.getAddition();
 
         FlashCardsSettingFragmentDirections.ActionFlashCardsSettingFragmentToFlashCardGameFragment action =
                 FlashCardsSettingFragmentDirections.actionFlashCardsSettingFragmentToFlashCardGameFragment();
@@ -128,7 +128,6 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
 
         Navigation.findNavController(view).navigate(action);
 
-//        Navigation.findNavController(view).navigate(R.id.action_flashCardsSettingFragment_to_flashCardGameFragment);
     }
 
 

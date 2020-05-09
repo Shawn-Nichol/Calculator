@@ -143,7 +143,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Enter"
-            android:onClick="@{(view) -> handlers.compareAnswer()}"
+            android:onClick="@{(view) -> handlers.Enter(view)}"
             app:layout_constraintBottom_toBottomOf="@+id/backspace"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/backspace"

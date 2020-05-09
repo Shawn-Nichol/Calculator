@@ -74,7 +74,7 @@ public class FlashCardGameFragment extends Fragment {
                 "\n Multiple " + mMultiple +
                 "\n Divide " + mDivide);
 
-        mViewModel.setNumberOfQuestions(10);
+        mViewModel.setNumberOfQuestions(3);
 
         if(savedInstanceState == null) {
             initFlashCards();
