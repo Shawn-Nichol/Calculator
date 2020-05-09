@@ -3,6 +3,7 @@ package com.example.calculator.flashcards.game;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -68,20 +69,55 @@ public class GameHandler extends BaseObservable {
         return mViewModel.getFormula().get(mViewModel.getCurrentQuestion());
     }
 
+    @Bindable
+    public String getCurrentQuestion() {
+        int question = mViewModel.getCurrentQuestion();
+        Log.d(TAG, "getCurrentQuestion: " + question);
+        return String.valueOf(question);
+    }
+
+    /**
+     * Compare the user answer to the correct answer, and display the next questions. If there are no
+     * more questions move onto the results fragment.
+     * @param view
+     */
     public void Enter(View view) {
 
+        // If User doesn't enter a value, the will be notified.
+        if(mViewModel.getUserAnswer() == "") {
+            Toast.makeText(mContext, "Please enter a number", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        // If user enters the correct number the correct counter will go up by one.
+        if(mViewModel.getAnswer().get(mViewModel.getCurrentQuestion()) == Integer.valueOf(mViewModel.getUserAnswer())) {
+            mViewModel.setQuestionCorrect(1);
+            Log.d(TAG, "Enter: Correct, " );
+
+        }
+
+        Log.d(TAG, "Enter: number of correct answers " + mViewModel.getQuestionCorrect());
+
+
+
+        // After all questions have been answer go to the next fragment
         if(mViewModel.getNumberOfQuestions() -1 > mViewModel.getCurrentQuestion()) {
             Log.d(TAG, "Enter: next question");
             mViewModel.setCurrentQuestion(1);
+            mViewModel.setUserAnswer("");
+            notifyPropertyChanged(BR.number);
             notifyPropertyChanged(BR.question);
+            notifyPropertyChanged(BR.currentQuestion);
         } else {
             Log.d(TAG, "Enter: no more questions");
             Navigation.findNavController(view).navigate(R.id.action_flashCardGameFragment_to_flashCardResultsFragment);
 
 
         }
+
     }
+
+
 
 
 }

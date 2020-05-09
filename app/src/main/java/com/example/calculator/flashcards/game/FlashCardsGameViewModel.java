@@ -80,5 +80,11 @@ public class FlashCardsGameViewModel extends ViewModel {
         this.formula.add(formula);
     }
 
+    public int getQuestionCorrect() {
+        return questionCorrect;
+    }
 
+    public void setQuestionCorrect(int questionCorrect) {
+        this.questionCorrect += questionCorrect;
+    }
 }
