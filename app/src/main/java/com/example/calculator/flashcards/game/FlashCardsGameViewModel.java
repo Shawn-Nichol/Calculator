@@ -9,17 +9,16 @@ public class FlashCardsGameViewModel extends ViewModel {
 
     private static final String TAG = "FlashCardsGameViewModel";
 
-    private int mCurrentQuestion;
     private String mUserAnswer = "";
-    int getmCurrentQuestion = 0;
-    int questionCorrect = 0;
+    private int mCurrentQuestion;
+    private int mQuestionCorrect = 0;
+    private int numberOfQuestions;
 
     private List<Integer> answer = new ArrayList<>();
     private List<String> formula = new ArrayList<>();
     private List<String> arithmeticType = new ArrayList<>();
     private List<String> arithmeticSelected = new ArrayList<>();
 
-    int numberOfQuestions;
 
     public FlashCardsGameViewModel() {
     }
@@ -32,27 +31,27 @@ public class FlashCardsGameViewModel extends ViewModel {
         this.mCurrentQuestion += mCurrentQuestion;
     }
 
-    String getUserAnswer() {
+    public String getUserAnswer() {
         return mUserAnswer;
     }
 
-    void setUserAnswer(String mUserAnswer) {
+    public void setUserAnswer(String mUserAnswer) {
         this.mUserAnswer = mUserAnswer;
     }
 
-    void addArithmeticType(String arithmetic) {
+    public void addArithmeticType(String arithmetic) {
         arithmeticType.add(arithmetic);
     }
 
-    List<String> getArithmeticType() {
+    public List<String> getArithmeticType() {
         return arithmeticType;
     }
 
-    int getNumberOfQuestions() {
+    public int getNumberOfQuestions() {
         return numberOfQuestions;
     }
 
-    void setNumberOfQuestions(int numberOfQuestions) {
+    public void setNumberOfQuestions(int numberOfQuestions) {
         this.numberOfQuestions = numberOfQuestions;
     }
 
@@ -60,7 +59,7 @@ public class FlashCardsGameViewModel extends ViewModel {
         arithmeticSelected.add(arithmetic);
     }
 
-    List<String> getArithmeticSelected() {
+    public List<String> getArithmeticSelected() {
         return arithmeticSelected;
     }
 
@@ -80,11 +79,11 @@ public class FlashCardsGameViewModel extends ViewModel {
         this.formula.add(formula);
     }
 
-    public int getQuestionCorrect() {
-        return questionCorrect;
+    public int getCorrectQuestions() {
+        return mQuestionCorrect;
     }
 
-    public void setQuestionCorrect(int questionCorrect) {
-        this.questionCorrect += questionCorrect;
+    public void setQuestionCorrect(int mQuestionCorrect) {
+        this.mQuestionCorrect += mQuestionCorrect;
     }
 }

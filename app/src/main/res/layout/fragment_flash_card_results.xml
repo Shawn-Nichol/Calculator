@@ -9,7 +9,7 @@
             type="com.example.calculator.flashcards.results.ResultsHandler" />
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".flashcards.settings.FlashCardsSettingFragment">
@@ -18,13 +18,45 @@
             android:id="@+id/btn_new_game"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Restart"
+            android:layout_marginBottom="16dp"
             android:onClick="@{(view) -> handlers.newGame(view)}"
+            android:text="Restart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="You Answered "
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_out_of"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_out_of"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{handlers.results}"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView6"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="correctly"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_out_of"
+            app:layout_constraintStart_toStartOf="@+id/tv_out_of"
+            app:layout_constraintTop_toBottomOf="@+id/tv_out_of" />
 
-    </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

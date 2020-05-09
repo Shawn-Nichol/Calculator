@@ -116,7 +116,7 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
         Log.d(TAG, "startGame: number of question " + mViewModel.getNumberOfQuestions());
 
 
-        boolean addition = mViewModel.getAddition();
+//        boolean addition = mViewModel.getAddition();
 
         FlashCardsSettingFragmentDirections.ActionFlashCardsSettingFragmentToFlashCardGameFragment action =
                 FlashCardsSettingFragmentDirections.actionFlashCardsSettingFragmentToFlashCardGameFragment();

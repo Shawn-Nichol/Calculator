@@ -10,8 +10,6 @@ import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.navigation.Navigation;
 
-import com.example.calculator.R;
-
 
 public class GameHandler extends BaseObservable {
 
@@ -46,8 +44,9 @@ public class GameHandler extends BaseObservable {
      */
     @Bindable
     public String getNumber() {
-        Log.d(TAG, "getNumber: " + mViewModel.getUserAnswer());
-        return mViewModel.getUserAnswer();
+        String answer = mViewModel.getUserAnswer();
+        Log.d(TAG, "getNumber: " + answer);
+        return answer;
     }
 
     /**
@@ -63,7 +62,10 @@ public class GameHandler extends BaseObservable {
         notifyPropertyChanged(BR.number);
     }
 
-
+    /**
+     * Get the formula for the current question.
+     * @return
+     */
     @Bindable
     public String getQuestion() {
         return mViewModel.getFormula().get(mViewModel.getCurrentQuestion());
@@ -82,6 +84,9 @@ public class GameHandler extends BaseObservable {
      * @param view
      */
     public void Enter(View view) {
+        int correctAnswer = mViewModel.getAnswer().get(mViewModel.getCurrentQuestion());
+        int userAnswer = Integer.valueOf(mViewModel.getUserAnswer());
+
 
         // If User doesn't enter a value, the will be notified.
         if(mViewModel.getUserAnswer() == "") {
@@ -90,15 +95,12 @@ public class GameHandler extends BaseObservable {
         }
 
         // If user enters the correct number the correct counter will go up by one.
-        if(mViewModel.getAnswer().get(mViewModel.getCurrentQuestion()) == Integer.valueOf(mViewModel.getUserAnswer())) {
+        if(userAnswer == correctAnswer) {
             mViewModel.setQuestionCorrect(1);
             Log.d(TAG, "Enter: Correct, " );
-
         }
 
-        Log.d(TAG, "Enter: number of correct answers " + mViewModel.getQuestionCorrect());
-
-
+        Log.d(TAG, "Enter: number of correct answers " + mViewModel.getCorrectQuestions());
 
         // After all questions have been answer go to the next fragment
         if(mViewModel.getNumberOfQuestions() -1 > mViewModel.getCurrentQuestion()) {
@@ -109,15 +111,19 @@ public class GameHandler extends BaseObservable {
             notifyPropertyChanged(BR.question);
             notifyPropertyChanged(BR.currentQuestion);
         } else {
-            Log.d(TAG, "Enter: no more questions");
-            Navigation.findNavController(view).navigate(R.id.action_flashCardGameFragment_to_flashCardResultsFragment);
-
-
+            endOfGame(view);
         }
-
     }
 
+    private void endOfGame(View view) {
+//        Log.d(TAG, "Enter: no more questions");
+//        Navigation.findNavController(view).navigate(R.id.action_flashCardGameFragment_to_flashCardResultsFragment);
+        FlashCardGameFragmentDirections.ActionFlashCardGameFragmentToFlashCardResultsFragment action =
+                FlashCardGameFragmentDirections.actionFlashCardGameFragmentToFlashCardResultsFragment();
 
+        action.setCorrecQuestions(mViewModel.getCorrectQuestions());
+        action.setNumberOfQuestions(mViewModel.getNumberOfQuestions());
 
-
+        Navigation.findNavController(view).navigate(action);
+    }
 }
