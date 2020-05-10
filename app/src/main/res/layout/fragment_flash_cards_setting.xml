@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="handlers"
             type="com.example.calculator.flashcards.settings.SettingHandler" />
@@ -91,14 +90,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@{handlers.getQuestions()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_number_of_questions"
@@ -107,7 +98,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:onClick="@{(view) -> handlers.numberPicker(view)}"
-            android:text="@{handlers.getQuestions}"
+            android:text="@{handlers.numberOfQuestions}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/switch_divide" />
 
@@ -123,15 +114,10 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/btn_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:onClick="@{(view) -> handlers.setQuestions(view)}"
-            android:text="btn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            android:id="@+id/btn_test"
+            android:onClick="@{(view) -> handlers.test(view)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -14,45 +14,47 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.DialogFragment;
 
 
-public class NumberPickerFragment extends AppCompatDialogFragment {
+public class NumberOfQuestionsDialog extends DialogFragment {
     private static final String TAG = "Calculator NumberPickerFragment";
 
-    NumberPickerListener numberPickerListener;
-    NumberPicker numberPicker;
 
-    FlashCardsSettingViewModel mViewModel;
-    Context mContext;
+    private NumberPicker picker;
+
+    private FlashCardsSettingViewModel mViewModel;
+    private Context mContext;
 
 
-
-    public NumberPickerFragment(FlashCardsSettingViewModel mViewModel, Context context) {
+    /**
+     * Constructor
+     * @param mViewModel
+     * @param context
+     */
+    NumberOfQuestionsDialog(FlashCardsSettingViewModel mViewModel, Context context) {
+        Log.d(TAG, "NumberPickerFragment: constructor ");
         this.mViewModel = mViewModel;
         this.mContext = context;
     }
 
 
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateDialog: ");
 
-
-
-        numberPicker = new NumberPicker(getActivity());
-        numberPicker.setMinValue(5);
-        numberPicker.setMaxValue(20);
-        numberPicker.setValue(mViewModel.getNumberOfQuestions());
-
-
-
+        picker = new NumberPicker(getActivity());
+        picker.setMinValue(5);
+        picker.setMaxValue(20);
+        picker.setValue(mViewModel.getNumberOfQuestions());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Select Number of Questions")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d(TAG, "onClick: Postive " + numberPicker.getValue());
-                        mViewModel.setNumberOfQuestions(numberPicker.getValue());
-                        numberPickerListener.selectedNumber(numberPicker.getValue());
+                        Log.d(TAG, "onClick: Postive " + picker.getValue());
+                        mViewModel.setNumberOfQuestions(picker.getValue());
+
 
                     }
                 })
@@ -65,25 +67,12 @@ public class NumberPickerFragment extends AppCompatDialogFragment {
                 });
 
 
-        builder.setView(numberPicker);
+        builder.setView(picker);
         return builder.create();
 
     }
 
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
 
-        try{
-            numberPickerListener = (NumberPickerListener)mContext;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() +
-                    "must implement ExampleDialogListener");
-        }
-    }
 
-    public interface NumberPickerListener {
-        void selectedNumber(int number);
-    }
 }

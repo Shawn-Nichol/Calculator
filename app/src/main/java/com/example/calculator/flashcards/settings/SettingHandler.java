@@ -1,5 +1,6 @@
 package com.example.calculator.flashcards.settings;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -18,10 +19,9 @@ import androidx.navigation.Navigation;
 import com.example.calculator.BR;
 import com.example.calculator.R;
 import com.example.calculator.databinding.FragmentFlashCardsSettingBinding;
-import com.example.calculator.flashcards.game.FlashCardGameFragmentArgs;
-import com.example.calculator.flashcards.game.FlashCardGameFragmentDirections;
+import com.example.calculator.generated.callback.OnClickListener;
 
-public class SettingHandler extends BaseObservable implements NumberPickerFragment.NumberPickerListener {
+public class SettingHandler extends BaseObservable {
 
     private static final String TAG = "Calculator Handler";
 
@@ -29,8 +29,8 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
     FragmentManager fragmentManager;
     FlashCardsSettingViewModel mViewModel;
     FragmentFlashCardsSettingBinding mBinding;
-
     SharedPreferences sharedPref;
+
 
     // Keys
     public static final String KEY_PREFERENCE_FILE = "com.example.calculator.flashcards.settings_929";
@@ -43,17 +43,26 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
     // Views
     private SwitchCompat switchAddition, switchMinus, switchMultiplication, switchDivision;
 
+
     public SettingHandler() {
     }
 
-    public SettingHandler(Context mContext, FlashCardsSettingViewModel viewModel, FragmentFlashCardsSettingBinding mBinding) {
+    /**
+     * Constructor
+     */
+    public SettingHandler(Context mContext, FlashCardsSettingViewModel viewModel, FragmentFlashCardsSettingBinding mBinding,
+                          FragmentManager fm) {
         this.mContext = mContext;
         this.mViewModel = viewModel;
         this.mBinding = mBinding;
+        this.fragmentManager = fm;
         bindViews();
         loadSwitchState();
     }
 
+    /**
+     * Binds views for easy access.
+     */
     private void bindViews() {
         Log.d(TAG, "bindViews: ");
         switchAddition = mBinding.switchAddition;
@@ -63,6 +72,9 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
 
     }
 
+    /**
+     * loads the state of the arithmetic switches.
+     */
     public void loadSwitchState() {
         sharedPref = mContext.getSharedPreferences(KEY_PREFERENCE_FILE, Context.MODE_PRIVATE);
 
@@ -110,13 +122,9 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
                 "\n divide " + divide);
     }
 
-
-
     public void startGame(View view) {
         Log.d(TAG, "startGame: number of question " + mViewModel.getNumberOfQuestions());
 
-
-//        boolean addition = mViewModel.getAddition();
 
         FlashCardsSettingFragmentDirections.ActionFlashCardsSettingFragmentToFlashCardGameFragment action =
                 FlashCardsSettingFragmentDirections.actionFlashCardsSettingFragmentToFlashCardGameFragment();
@@ -129,8 +137,6 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
         Navigation.findNavController(view).navigate(action);
 
     }
-
-
 
     public void setAdditionOn(View view) {
 
@@ -191,30 +197,31 @@ public class SettingHandler extends BaseObservable implements NumberPickerFragme
         });
     }
 
+
     public void numberPicker(View view) {
         Log.d(TAG, "numberPicker: ");
-        DialogFragment fragment = new NumberPickerFragment(mViewModel, view.getContext());
-
+        DialogFragment fragment = new NumberOfQuestionsDialog(mViewModel, mContext );
         fragment.show(fragmentManager, "number picker");
-        notifyPropertyChanged(BR.questions);
+        notifyPropertyChanged(BR.numberOfQuestions);
+
     }
 
 
 
     @Bindable
-    public String getQuestions() {
+    public String getNumberOfQuestions() {
         return "Number Of Questions " + mViewModel.getNumberOfQuestions();
 
     }
 
 
-    public void setQuestions(View view) {
+    public void setNumberOfQuestions(View view) {
         Log.d(TAG, "setQuestions: " + mViewModel.getNumberOfQuestions());
-        notifyPropertyChanged(BR.questions);
+        notifyPropertyChanged(BR.numberOfQuestions);
     }
 
-    @Override
-    public void selectedNumber(int number) {
-        Log.d(TAG, "selectedNumber: " + number);
+
+    public void test(View view) {
+        Log.d(TAG, "test: " + mViewModel.getNumberOfQuestions());
     }
 }

@@ -64,7 +64,6 @@ public class GameHandler extends BaseObservable {
 
     /**
      * Get the formula for the current question.
-     * @return
      */
     @Bindable
     public String getQuestion() {
