@@ -33,6 +33,7 @@ public class FlashCardGameFragment extends Fragment {
     FragmentFlashCardsGameBinding mBinding;
     FlashCardsGameViewModel mViewModel;
 
+    int mNumberOfQuestions;
     boolean mAddition;
     boolean mMinus;
     boolean mMultiple;
@@ -64,17 +65,20 @@ public class FlashCardGameFragment extends Fragment {
 
 
         FlashCardGameFragmentArgs args = FlashCardGameFragmentArgs.fromBundle(getArguments());
+
+        mNumberOfQuestions = args.getNumberOfQuestions();
         mAddition = args.getAddition();
         mMinus = args.getMinus();
         mMultiple = args.getMultiple();
         mDivide = args.getDivide();
         Log.d(TAG, "onStart: " +
+                "\n Number Of Questions " + mNumberOfQuestions +
                 "\n Addition " + mAddition +
                 "\n Minus " + mMinus +
                 "\n Multiple " + mMultiple +
                 "\n Divide " + mDivide);
 
-        mViewModel.setNumberOfQuestions(3);
+        mViewModel.setNumberOfQuestions(mNumberOfQuestions);
 
         if(savedInstanceState == null) {
             initFlashCards();

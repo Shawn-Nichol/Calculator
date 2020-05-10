@@ -44,6 +44,10 @@
             android:name="Divide"
             app:argType="boolean"
             android:defaultValue="false" />
+        <argument
+            android:name="NumberOfQuestions"
+            app:argType="integer"
+            android:defaultValue="5" />
 
 
     </fragment>

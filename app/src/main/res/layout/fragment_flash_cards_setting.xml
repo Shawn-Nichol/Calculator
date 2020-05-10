@@ -28,7 +28,7 @@
             android:id="@+id/switch_addition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{(view) -> handlers.setAdditionOn(view)}"
+            android:onClick="@{(view) -> handlers.setAdditionState(view)}"
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:onClick="@{(view) -> handlers.setMinus(view)}"
+            android:onClick="@{(view) -> handlers.setMinusState(view)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -63,11 +63,11 @@
             app:layout_constraintTop_toBottomOf="@+id/switch_minus" />
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch_multiple"
+            android:id="@+id/switch_multiplication"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:onClick="@{(view) -> handlers.setMultiplication(view)}"
+            android:onClick="@{(view) -> handlers.setMultiplicationState(view)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -79,14 +79,14 @@
             android:layout_marginTop="16dp"
             android:text="@string/divide"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch_multiple" />
+            app:layout_constraintTop_toBottomOf="@+id/switch_multiplication" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_divide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:onClick="@{(view) -> handlers.setDivision(view)}"
+            android:onClick="@{(view) -> handlers.setDivisionState(view)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:onClick="@{(view) -> handlers.numberPicker(view)}"
+            android:onClick="@{(view) -> handlers.setNumberOfQuestions(view)}"
             android:text="@{handlers.numberOfQuestions}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/switch_divide" />
@@ -113,11 +113,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_test"
-            android:onClick="@{(view) -> handlers.test(view)}"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

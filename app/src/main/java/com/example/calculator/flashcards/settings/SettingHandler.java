@@ -1,6 +1,5 @@
 package com.example.calculator.flashcards.settings;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -17,9 +16,9 @@ import androidx.navigation.Navigation;
 
 
 import com.example.calculator.BR;
-import com.example.calculator.R;
 import com.example.calculator.databinding.FragmentFlashCardsSettingBinding;
-import com.example.calculator.generated.callback.OnClickListener;
+
+import org.jetbrains.annotations.NotNull;
 
 public class SettingHandler extends BaseObservable {
 
@@ -34,6 +33,7 @@ public class SettingHandler extends BaseObservable {
 
     // Keys
     public static final String KEY_PREFERENCE_FILE = "com.example.calculator.flashcards.settings_929";
+    public static final String KEY_NUMBER_OF_QUESTIONS = "numberOfQuestions";
     public static final String KEY_ADDITION = "addition";
     public static final String KEY_MINUS = "minus";
     public static final String KEY_MULTIPLICATION = "multiplication";
@@ -67,7 +67,7 @@ public class SettingHandler extends BaseObservable {
         Log.d(TAG, "bindViews: ");
         switchAddition = mBinding.switchAddition;
         switchMinus = mBinding.switchMinus;
-        switchMultiplication = mBinding.switchMultiple;
+        switchMultiplication = mBinding.switchMultiplication;
         switchDivision = mBinding.switchDivide;
 
     }
@@ -129,6 +129,7 @@ public class SettingHandler extends BaseObservable {
         FlashCardsSettingFragmentDirections.ActionFlashCardsSettingFragmentToFlashCardGameFragment action =
                 FlashCardsSettingFragmentDirections.actionFlashCardsSettingFragmentToFlashCardGameFragment();
 
+        action.setNumberOfQuestions(mViewModel.getNumberOfQuestions());
         action.setAddition(mViewModel.getAddition());
         action.setMinus(mViewModel.getMinus());
         action.setMultiple(mViewModel.getMultiplication());
@@ -138,7 +139,7 @@ public class SettingHandler extends BaseObservable {
 
     }
 
-    public void setAdditionOn(View view) {
+    public void setAdditionState(View view) {
 
         switchAddition.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -154,9 +155,8 @@ public class SettingHandler extends BaseObservable {
         });
     }
 
-    public void setMinus(View view) {
-        SwitchCompat mySwitch = view.findViewById(R.id.switch_minus);
-        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    public void setMinusState(@NotNull View view) {
+        switchMinus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
@@ -169,9 +169,8 @@ public class SettingHandler extends BaseObservable {
         });
     }
 
-    public void setMultiplication(View view) {
-        SwitchCompat mySwitch = view.findViewById(R.id.switch_multiple);
-        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    public void setMultiplicationState(@NotNull View view) {
+        switchMultiplication.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
@@ -183,9 +182,9 @@ public class SettingHandler extends BaseObservable {
         });
     }
 
-    public void setDivision(View view) {
-        SwitchCompat mySwitch = view.findViewById(R.id.switch_divide);
-        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    public void setDivisionState(@NotNull View view) {
+
+        switchDivision.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
@@ -196,17 +195,6 @@ public class SettingHandler extends BaseObservable {
             }
         });
     }
-
-
-    public void numberPicker(View view) {
-        Log.d(TAG, "numberPicker: ");
-        DialogFragment fragment = new NumberOfQuestionsDialog(mViewModel, mContext );
-        fragment.show(fragmentManager, "number picker");
-        notifyPropertyChanged(BR.numberOfQuestions);
-
-    }
-
-
 
     @Bindable
     public String getNumberOfQuestions() {
@@ -216,12 +204,9 @@ public class SettingHandler extends BaseObservable {
 
 
     public void setNumberOfQuestions(View view) {
-        Log.d(TAG, "setQuestions: " + mViewModel.getNumberOfQuestions());
         notifyPropertyChanged(BR.numberOfQuestions);
+        DialogFragment fragment = new NumberOfQuestionsDialog(mViewModel, mBinding);
+        fragment.show(fragmentManager, "number picker");
     }
 
-
-    public void test(View view) {
-        Log.d(TAG, "test: " + mViewModel.getNumberOfQuestions());
-    }
 }

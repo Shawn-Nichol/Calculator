@@ -13,6 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.calculator.databinding.FragmentFlashCardsSettingBinding;
+
+import java.util.Set;
+
 
 public class NumberOfQuestionsDialog extends DialogFragment {
     private static final String TAG = "Calculator NumberPickerFragment";
@@ -21,18 +25,17 @@ public class NumberOfQuestionsDialog extends DialogFragment {
     private NumberPicker picker;
 
     private FlashCardsSettingViewModel mViewModel;
-    private Context mContext;
+    FragmentFlashCardsSettingBinding mBinding;
 
 
     /**
      * Constructor
      * @param mViewModel
-     * @param context
      */
-    NumberOfQuestionsDialog(FlashCardsSettingViewModel mViewModel, Context context) {
+    NumberOfQuestionsDialog(FlashCardsSettingViewModel mViewModel, FragmentFlashCardsSettingBinding binding) {
         Log.d(TAG, "NumberPickerFragment: constructor ");
         this.mViewModel = mViewModel;
-        this.mContext = context;
+        this.mBinding = binding;
     }
 
 
@@ -54,7 +57,7 @@ public class NumberOfQuestionsDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d(TAG, "onClick: Postive " + picker.getValue());
                         mViewModel.setNumberOfQuestions(picker.getValue());
-
+                        mBinding.btnNumberOfQuestions.setText("Number of Questions " + picker.getValue());
 
                     }
                 })

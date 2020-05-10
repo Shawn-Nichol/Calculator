@@ -70,11 +70,15 @@ public class GameHandler extends BaseObservable {
         return mViewModel.getFormula().get(mViewModel.getCurrentQuestion());
     }
 
+    /**
+     * Displays what question number the user is on.
+     * @return
+     */
     @Bindable
     public String getCurrentQuestion() {
         int question = mViewModel.getCurrentQuestion();
         Log.d(TAG, "getCurrentQuestion: " + question);
-        return String.valueOf(question);
+        return String.valueOf(question) + " of " + mViewModel.getNumberOfQuestions();
     }
 
     /**
