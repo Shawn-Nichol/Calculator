@@ -5,8 +5,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.Bindable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
@@ -22,23 +26,23 @@ public class FlashCardsSettingFragment extends Fragment {
 
     private static final String TAG = "Calculator FlashCardsSettingFragment";
 
-    FragmentFlashCardsSettingBinding mBinding;
-    Context mContext;
+    private FragmentFlashCardsSettingBinding mBinding;
+    private Context mContext;
     FlashCardsSettingViewModel mViewModel;
 
-    SettingHandler mHandler;
+    private SettingHandler mHandler;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
-
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("FC Settings");
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_flash_cards_setting, container, false);
 
         mContext = getActivity();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
         initViewModel();
 
-        mHandler = new SettingHandler(mContext, mViewModel, mBinding);
+        mHandler = new SettingHandler(mContext, mViewModel, mBinding, fm);
 
         mBinding.setHandlers(mHandler);
 

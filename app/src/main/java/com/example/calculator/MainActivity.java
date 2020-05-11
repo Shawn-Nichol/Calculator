@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, "onCreate: ");
         
         initNavDrawer();
-
     }
 
 
@@ -69,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(menuItem.getItemId()) {
             case R.id.nav_calculator:
                 navController.navigate(R.id.calculatorScreen);
+                break;
             case R.id.nav_flash_card:
                 navController.navigate(R.id.flashCardsSettingScreen);
                 break;

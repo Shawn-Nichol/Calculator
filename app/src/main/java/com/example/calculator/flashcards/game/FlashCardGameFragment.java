@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -33,6 +34,7 @@ public class FlashCardGameFragment extends Fragment {
     FragmentFlashCardsGameBinding mBinding;
     FlashCardsGameViewModel mViewModel;
 
+    int mNumberOfQuestions;
     boolean mAddition;
     boolean mMinus;
     boolean mMultiple;
@@ -47,6 +49,8 @@ public class FlashCardGameFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("FC Settings");
+
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_flash_cards_game, container, false);
         mContext = getContext(); // Get Context of view
         initViewModel();
@@ -64,17 +68,20 @@ public class FlashCardGameFragment extends Fragment {
 
 
         FlashCardGameFragmentArgs args = FlashCardGameFragmentArgs.fromBundle(getArguments());
+
+        mNumberOfQuestions = args.getNumberOfQuestions();
         mAddition = args.getAddition();
         mMinus = args.getMinus();
         mMultiple = args.getMultiple();
         mDivide = args.getDivide();
         Log.d(TAG, "onStart: " +
+                "\n Number Of Questions " + mNumberOfQuestions +
                 "\n Addition " + mAddition +
                 "\n Minus " + mMinus +
                 "\n Multiple " + mMultiple +
                 "\n Divide " + mDivide);
 
-        mViewModel.setNumberOfQuestions(3);
+        mViewModel.setNumberOfQuestions(mNumberOfQuestions);
 
         if(savedInstanceState == null) {
             initFlashCards();

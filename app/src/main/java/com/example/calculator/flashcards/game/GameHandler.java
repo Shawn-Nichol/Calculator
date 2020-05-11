@@ -64,18 +64,21 @@ public class GameHandler extends BaseObservable {
 
     /**
      * Get the formula for the current question.
-     * @return
      */
     @Bindable
     public String getQuestion() {
         return mViewModel.getFormula().get(mViewModel.getCurrentQuestion());
     }
 
+    /**
+     * Displays what question number the user is on.
+     * @return
+     */
     @Bindable
     public String getCurrentQuestion() {
         int question = mViewModel.getCurrentQuestion();
         Log.d(TAG, "getCurrentQuestion: " + question);
-        return String.valueOf(question);
+        return String.valueOf(question) + " of " + mViewModel.getNumberOfQuestions();
     }
 
     /**
@@ -85,18 +88,18 @@ public class GameHandler extends BaseObservable {
      */
     public void Enter(View view) {
         int correctAnswer = mViewModel.getAnswer().get(mViewModel.getCurrentQuestion());
-        int userAnswer = Integer.valueOf(mViewModel.getUserAnswer());
 
-
-        // If User doesn't enter a value, the will be notified.
-        if(mViewModel.getUserAnswer() == "") {
+        // If User doesn't enter a value, they will be notified.
+        if(mViewModel.getUserAnswer().equals("")) {
             Toast.makeText(mContext, "Please enter a number", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // If user enters the correct number the correct counter will go up by one.
+        int userAnswer = Integer.valueOf(mViewModel.getUserAnswer());
         if(userAnswer == correctAnswer) {
             mViewModel.setQuestionCorrect(1);
+
             Log.d(TAG, "Enter: Correct, " );
         }
 
@@ -116,8 +119,6 @@ public class GameHandler extends BaseObservable {
     }
 
     private void endOfGame(View view) {
-//        Log.d(TAG, "Enter: no more questions");
-//        Navigation.findNavController(view).navigate(R.id.action_flashCardGameFragment_to_flashCardResultsFragment);
         FlashCardGameFragmentDirections.ActionFlashCardGameFragmentToFlashCardResultsFragment action =
                 FlashCardGameFragmentDirections.actionFlashCardGameFragmentToFlashCardResultsFragment();
 
