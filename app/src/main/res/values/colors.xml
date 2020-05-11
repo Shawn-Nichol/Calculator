@@ -8,4 +8,10 @@
     <color name="colorBlack">#000000</color>
 
     <color  name="colorFlashCard">#f7ce00</color>
+
+    <color name="colorBlue">#2060d6</color>
+    <color name="orange">#d06201</color>
+    <color name="lightTextColor">#ffff</color>
+    <color name="lightGrey">#3b3d3d</color>
+
 </resources>
