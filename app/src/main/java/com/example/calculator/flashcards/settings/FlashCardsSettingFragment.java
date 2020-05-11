@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.Bindable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
@@ -34,8 +35,7 @@ public class FlashCardsSettingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
-
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("FC Settings");
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_flash_cards_setting, container, false);
 
         mContext = getActivity();
@@ -58,10 +58,6 @@ public class FlashCardsSettingFragment extends Fragment {
     private void initViewModel() {
         mViewModel = new ViewModelProvider(this).get(FlashCardsSettingViewModel.class);
     }
-
-
-
-
 
     @Override
     public void onStop() {

@@ -1,9 +1,11 @@
 package com.example.calculator.calculator;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.calculator.MainActivity;
 import com.example.calculator.R;
 import com.example.calculator.databinding.FragmentCalculatorBinding;
 
@@ -37,12 +40,14 @@ public class CalculatorFragment extends Fragment {
         Log.d(TAG, "onCreateView: ");
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_calculator, container, false);
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Calculator");
         initViewModel();
 
         Handler handler = new Handler(getContext(), viewModel);
         binding.setHandlers(handler);
 
         View view = binding.getRoot();
+
 
         return view;
     }
