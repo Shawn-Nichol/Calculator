@@ -8,8 +8,10 @@ import android.widget.TextView;
 
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
+import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnitRunner;
 
 
 import com.example.calculator.MainActivity;
@@ -41,7 +43,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.AllOf.allOf;
 
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidJUnit4ClassRunner.class)
 public class NavDrawer {
 
     // Launch Activity
@@ -111,6 +113,8 @@ public class NavDrawer {
 
         onView(allOf(instanceOf(TextView.class), withParent(withId(R.id.action_bar)))).check(matches(withText("Calculator")));
     }
+
+
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
